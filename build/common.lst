@@ -1,0 +1,409 @@
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"common.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Error_Handler,"ax",%progbits
+  18              		.align	1
+  19              		.p2align 2,,3
+  20              		.global	Error_Handler
+  21              		.arch armv7e-m
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  25              		.fpu fpv4-sp-d16
+  27              	Error_Handler:
+  28              	.LFB1338:
+  29              		.file 1 "Core/Src/common.c"
+   1:Core/Src/common.c **** /* Includes ------------------------------------------------------------------*/
+   2:Core/Src/common.c **** #include "common.h"
+   3:Core/Src/common.c **** 
+   4:Core/Src/common.c **** /* Global variables ----------------------------------------------------------*/
+   5:Core/Src/common.c **** uint32_t delay_tmp = 0;
+   6:Core/Src/common.c **** 
+   7:Core/Src/common.c **** /* Private includes ----------------------------------------------------------*/
+   8:Core/Src/common.c **** 
+   9:Core/Src/common.c **** /* Private typedef -----------------------------------------------------------*/
+  10:Core/Src/common.c **** 
+  11:Core/Src/common.c **** /* Private define ------------------------------------------------------------*/
+  12:Core/Src/common.c **** 
+  13:Core/Src/common.c **** /* Private macro -------------------------------------------------------------*/
+  14:Core/Src/common.c **** 
+  15:Core/Src/common.c **** /* Private variables ---------------------------------------------------------*/
+  16:Core/Src/common.c **** 
+  17:Core/Src/common.c **** 
+  18:Core/Src/common.c **** 
+  19:Core/Src/common.c **** __STATIC_INLINE uint32_t ITM_SendCharChannel(uint32_t ch, uint32_t channel);
+  20:Core/Src/common.c **** 
+  21:Core/Src/common.c **** ////////////////////////////////////////////////////////////////////////////////
+  22:Core/Src/common.c **** 
+  23:Core/Src/common.c **** /**
+  24:Core/Src/common.c ****   * @brief  This function is executed in case of error occurrence.
+  25:Core/Src/common.c ****   * @retval None
+  26:Core/Src/common.c ****   */
+  27:Core/Src/common.c **** void Error_Handler(void) {
+  30              		.loc 1 27 26 view -0
+  31              		.cfi_startproc
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 2
+
+
+  32              		@ Volatile: function does not return.
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		@ link register save eliminated.
+  36              	.L2:
+  28:Core/Src/common.c ****   while (1) {
+  37              		.loc 1 28 3 discriminator 1 view .LVU1
+  29:Core/Src/common.c ****     //
+  30:Core/Src/common.c ****   }
+  38              		.loc 1 30 3 discriminator 1 view .LVU2
+  28:Core/Src/common.c ****   while (1) {
+  39              		.loc 1 28 9 discriminator 1 view .LVU3
+  40 0000 FEE7     		b	.L2
+  41              		.cfi_endproc
+  42              	.LFE1338:
+  44 0002 00BF     		.section	.text.LED_Blink,"ax",%progbits
+  45              		.align	1
+  46              		.p2align 2,,3
+  47              		.global	LED_Blink
+  48              		.syntax unified
+  49              		.thumb
+  50              		.thumb_func
+  51              		.fpu fpv4-sp-d16
+  53              	LED_Blink:
+  54              	.LVL0:
+  55              	.LFB1339:
+  31:Core/Src/common.c **** }
+  32:Core/Src/common.c **** 
+  33:Core/Src/common.c **** 
+  34:Core/Src/common.c **** 
+  35:Core/Src/common.c **** /**
+  36:Core/Src/common.c ****   * @brief  This function blink a LED.
+  37:Core/Src/common.c ****   * @retval None
+  38:Core/Src/common.c ****   */
+  39:Core/Src/common.c **** void LED_Blink(GPIO_TypeDef* port, uint16_t pinSource) {
+  56              		.loc 1 39 56 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  40:Core/Src/common.c ****   (PIN_LEVEL(port, pinSource)) ? PIN_L(port, pinSource) : PIN_H(port, pinSource);
+  60              		.loc 1 40 3 view .LVU5
+  39:Core/Src/common.c ****   (PIN_LEVEL(port, pinSource)) ? PIN_L(port, pinSource) : PIN_H(port, pinSource);
+  61              		.loc 1 39 56 is_stmt 0 view .LVU6
+  62 0000 38B5     		push	{r3, r4, r5, lr}
+  63              	.LCFI0:
+  64              		.cfi_def_cfa_offset 16
+  65              		.cfi_offset 3, -16
+  66              		.cfi_offset 4, -12
+  67              		.cfi_offset 5, -8
+  68              		.cfi_offset 14, -4
+  69              		.loc 1 40 4 view .LVU7
+  70 0002 00F10473 		add	r3, r0, #34603008
+  71 0006 1033     		adds	r3, r3, #16
+  72 0008 01EBC300 		add	r0, r1, r3, lsl #3
+  73              	.LVL1:
+  74              		.loc 1 40 4 view .LVU8
+  75 000c 8000     		lsls	r0, r0, #2
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 3
+
+
+  76 000e DC00     		lsls	r4, r3, #3
+  39:Core/Src/common.c ****   (PIN_LEVEL(port, pinSource)) ? PIN_L(port, pinSource) : PIN_H(port, pinSource);
+  77              		.loc 1 39 56 view .LVU9
+  78 0010 0D46     		mov	r5, r1
+  79              		.loc 1 40 4 view .LVU10
+  80 0012 FFF7FEFF 		bl	Get_BitBandVal
+  81              	.LVL2:
+  82              		.loc 1 40 34 view .LVU11
+  83 0016 04F12003 		add	r3, r4, #32
+  84              		.loc 1 40 57 view .LVU12
+  85 001a 30B1     		cbz	r0, .L5
+  86              		.loc 1 40 34 discriminator 1 view .LVU13
+  87 001c 5819     		adds	r0, r3, r5
+  88 001e 8000     		lsls	r0, r0, #2
+  41:Core/Src/common.c **** }
+  89              		.loc 1 41 1 discriminator 1 view .LVU14
+  90 0020 BDE83840 		pop	{r3, r4, r5, lr}
+  91              	.LCFI1:
+  92              		.cfi_remember_state
+  93              		.cfi_restore 14
+  94              		.cfi_restore 5
+  95              		.cfi_restore 4
+  96              		.cfi_restore 3
+  97              		.cfi_def_cfa_offset 0
+  40:Core/Src/common.c ****   (PIN_LEVEL(port, pinSource)) ? PIN_L(port, pinSource) : PIN_H(port, pinSource);
+  98              		.loc 1 40 34 discriminator 1 view .LVU15
+  99 0024 0021     		movs	r1, #0
+ 100 0026 FFF7FEBF 		b	Set_BitBandVal
+ 101              	.LVL3:
+ 102              	.L5:
+ 103              	.LCFI2:
+ 104              		.cfi_restore_state
+  40:Core/Src/common.c ****   (PIN_LEVEL(port, pinSource)) ? PIN_L(port, pinSource) : PIN_H(port, pinSource);
+ 105              		.loc 1 40 59 discriminator 2 view .LVU16
+ 106 002a 5819     		adds	r0, r3, r5
+ 107 002c 8000     		lsls	r0, r0, #2
+ 108              		.loc 1 41 1 discriminator 2 view .LVU17
+ 109 002e BDE83840 		pop	{r3, r4, r5, lr}
+ 110              	.LCFI3:
+ 111              		.cfi_restore 14
+ 112              		.cfi_restore 5
+ 113              		.cfi_restore 4
+ 114              		.cfi_restore 3
+ 115              		.cfi_def_cfa_offset 0
+  40:Core/Src/common.c ****   (PIN_LEVEL(port, pinSource)) ? PIN_L(port, pinSource) : PIN_H(port, pinSource);
+ 116              		.loc 1 40 59 discriminator 2 view .LVU18
+ 117 0032 0121     		movs	r1, #1
+ 118 0034 FFF7FEBF 		b	Set_BitBandVal
+ 119              	.LVL4:
+ 120              		.cfi_endproc
+ 121              	.LFE1339:
+ 123              		.section	.text._write,"ax",%progbits
+ 124              		.align	1
+ 125              		.p2align 2,,3
+ 126              		.global	_write
+ 127              		.syntax unified
+ 128              		.thumb
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 4
+
+
+ 129              		.thumb_func
+ 130              		.fpu fpv4-sp-d16
+ 132              	_write:
+ 133              	.LVL5:
+ 134              	.LFB1341:
+  42:Core/Src/common.c **** 
+  43:Core/Src/common.c **** 
+  44:Core/Src/common.c **** 
+  45:Core/Src/common.c **** 
+  46:Core/Src/common.c **** 
+  47:Core/Src/common.c **** 
+  48:Core/Src/common.c **** 
+  49:Core/Src/common.c **** 
+  50:Core/Src/common.c **** 
+  51:Core/Src/common.c **** 
+  52:Core/Src/common.c **** 
+  53:Core/Src/common.c **** /********************************************************************************/
+  54:Core/Src/common.c **** /*                         printf() output supply block                         */
+  55:Core/Src/common.c **** /********************************************************************************/
+  56:Core/Src/common.c **** /*
+  57:Core/Src/common.c ****  *
+  58:Core/Src/common.c ****  */
+  59:Core/Src/common.c **** __STATIC_INLINE uint32_t ITM_SendCharChannel(uint32_t ch, uint32_t channel) {
+  60:Core/Src/common.c ****    /* ITM enabled and ITM Port enabled */
+  61:Core/Src/common.c ****   if (((ITM->TCR & ITM_TCR_ITMENA_Msk) != 0UL) && ((ITM->TER & (1 << channel)) != 0UL)) {
+  62:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+  63:Core/Src/common.c ****       __NOP();
+  64:Core/Src/common.c ****     }
+  65:Core/Src/common.c ****     ITM->PORT[channel].u8 = (uint8_t)ch;
+  66:Core/Src/common.c ****   }
+  67:Core/Src/common.c ****   return (ch);
+  68:Core/Src/common.c **** }
+  69:Core/Src/common.c **** 
+  70:Core/Src/common.c **** 
+  71:Core/Src/common.c **** /*
+  72:Core/Src/common.c ****  *
+  73:Core/Src/common.c ****  */
+  74:Core/Src/common.c **** int _write(int32_t file, char *ptr, int32_t len) {
+ 135              		.loc 1 74 50 is_stmt 1 view -0
+ 136              		.cfi_startproc
+ 137              		@ args = 0, pretend = 0, frame = 0
+ 138              		@ frame_needed = 0, uses_anonymous_args = 0
+ 139              		@ link register save eliminated.
+  75:Core/Src/common.c ****  for(int32_t i = 0 ; i < len ; i++) {
+ 140              		.loc 1 75 2 view .LVU20
+ 141              	.LBB5:
+ 142              		.loc 1 75 6 view .LVU21
+ 143              		.loc 1 75 22 view .LVU22
+ 144              		.loc 1 75 2 is_stmt 0 view .LVU23
+ 145 0000 101E     		subs	r0, r2, #0
+ 146              	.LVL6:
+ 147              		.loc 1 75 2 view .LVU24
+ 148 0002 18DD     		ble	.L23
+ 149              	.LBE5:
+  74:Core/Src/common.c ****  for(int32_t i = 0 ; i < len ; i++) {
+ 150              		.loc 1 74 50 view .LVU25
+ 151 0004 30B4     		push	{r4, r5}
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 5
+
+
+ 152              	.LCFI4:
+ 153              		.cfi_def_cfa_offset 8
+ 154              		.cfi_offset 4, -8
+ 155              		.cfi_offset 5, -4
+ 156              	.LBB12:
+ 157              	.LBB6:
+ 158              	.LBB7:
+  61:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+ 159              		.loc 1 61 12 view .LVU26
+ 160 0006 4FF06043 		mov	r3, #-536870912
+ 161 000a 0D18     		adds	r5, r1, r0
+ 162              	.LVL7:
+ 163              	.L12:
+  61:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+ 164              		.loc 1 61 12 view .LVU27
+ 165              	.LBE7:
+ 166              	.LBE6:
+  76:Core/Src/common.c ****    ITM_SendCharChannel(*ptr, 0);
+ 167              		.loc 1 76 4 is_stmt 1 discriminator 3 view .LVU28
+ 168              	.LBB10:
+ 169              	.LBI6:
+  59:Core/Src/common.c ****    /* ITM enabled and ITM Port enabled */
+ 170              		.loc 1 59 26 discriminator 3 view .LVU29
+ 171              	.LBB8:
+  61:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+ 172              		.loc 1 61 3 discriminator 3 view .LVU30
+  61:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+ 173              		.loc 1 61 12 is_stmt 0 discriminator 3 view .LVU31
+ 174 000c D3F8804E 		ldr	r4, [r3, #3712]
+  61:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+ 175              		.loc 1 61 6 discriminator 3 view .LVU32
+ 176 0010 E407     		lsls	r4, r4, #31
+ 177 0012 0BD5     		bpl	.L9
+  61:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+ 178              		.loc 1 61 56 view .LVU33
+ 179 0014 D3F8004E 		ldr	r4, [r3, #3584]
+  61:Core/Src/common.c ****     while (ITM->PORT[channel].u32 == 0UL) {
+ 180              		.loc 1 61 48 view .LVU34
+ 181 0018 E207     		lsls	r2, r4, #31
+ 182 001a 07D5     		bpl	.L9
+  62:Core/Src/common.c ****       __NOP();
+ 183              		.loc 1 62 30 view .LVU35
+ 184 001c 1C68     		ldr	r4, [r3]
+ 185              	.LBE8:
+ 186              	.LBE10:
+ 187              		.loc 1 76 24 view .LVU36
+ 188 001e 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+ 189              	.LBB11:
+ 190              	.LBB9:
+  62:Core/Src/common.c ****       __NOP();
+ 191              		.loc 1 62 11 is_stmt 1 view .LVU37
+ 192 0020 1CB9     		cbnz	r4, .L10
+ 193              	.L11:
+  63:Core/Src/common.c ****     }
+ 194              		.loc 1 63 7 view .LVU38
+ 195              		.syntax unified
+ 196              	@ 63 "Core/Src/common.c" 1
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 6
+
+
+ 197 0022 00BF     		nop
+ 198              	@ 0 "" 2
+  62:Core/Src/common.c ****       __NOP();
+ 199              		.loc 1 62 11 view .LVU39
+  62:Core/Src/common.c ****       __NOP();
+ 200              		.loc 1 62 30 is_stmt 0 view .LVU40
+ 201              		.thumb
+ 202              		.syntax unified
+ 203 0024 1C68     		ldr	r4, [r3]
+  62:Core/Src/common.c ****       __NOP();
+ 204              		.loc 1 62 11 view .LVU41
+ 205 0026 002C     		cmp	r4, #0
+ 206 0028 FBD0     		beq	.L11
+ 207              	.L10:
+  65:Core/Src/common.c ****   }
+ 208              		.loc 1 65 5 is_stmt 1 view .LVU42
+  65:Core/Src/common.c ****   }
+ 209              		.loc 1 65 27 is_stmt 0 view .LVU43
+ 210 002a 1A70     		strb	r2, [r3]
+ 211              	.LVL8:
+ 212              	.L9:
+  67:Core/Src/common.c **** }
+ 213              		.loc 1 67 3 is_stmt 1 view .LVU44
+  67:Core/Src/common.c **** }
+ 214              		.loc 1 67 3 is_stmt 0 view .LVU45
+ 215              	.LBE9:
+ 216              	.LBE11:
+  77:Core/Src/common.c ****    
+  78:Core/Src/common.c ****   //  LL_USART_TransmitData8(USART1, (*ptr));
+  79:Core/Src/common.c ****   //  while (!(LL_USART_IsActiveFlag_TXE(USART1)));
+  80:Core/Src/common.c ****    
+  81:Core/Src/common.c ****    ptr++;
+ 217              		.loc 1 81 4 is_stmt 1 view .LVU46
+ 218              		.loc 1 81 7 is_stmt 0 view .LVU47
+ 219 002c 0131     		adds	r1, r1, #1
+ 220              	.LVL9:
+  75:Core/Src/common.c ****    ITM_SendCharChannel(*ptr, 0);
+ 221              		.loc 1 75 32 is_stmt 1 view .LVU48
+  75:Core/Src/common.c ****    ITM_SendCharChannel(*ptr, 0);
+ 222              		.loc 1 75 22 view .LVU49
+  75:Core/Src/common.c ****    ITM_SendCharChannel(*ptr, 0);
+ 223              		.loc 1 75 2 is_stmt 0 view .LVU50
+ 224 002e A942     		cmp	r1, r5
+ 225 0030 ECD1     		bne	.L12
+ 226              	.LBE12:
+  82:Core/Src/common.c ****  }
+  83:Core/Src/common.c **** 	return len;
+ 227              		.loc 1 83 2 is_stmt 1 view .LVU51
+  84:Core/Src/common.c **** }...
+ 228              		.loc 1 84 1 is_stmt 0 view .LVU52
+ 229 0032 30BC     		pop	{r4, r5}
+ 230              	.LCFI5:
+ 231              		.cfi_restore 5
+ 232              		.cfi_restore 4
+ 233              		.cfi_def_cfa_offset 0
+ 234 0034 7047     		bx	lr
+ 235              	.L23:
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 7
+
+
+  83:Core/Src/common.c **** 	return len;
+ 236              		.loc 1 83 2 is_stmt 1 view .LVU53
+ 237              		.loc 1 84 1 is_stmt 0 view .LVU54
+ 238 0036 7047     		bx	lr
+ 239              		.cfi_endproc
+ 240              	.LFE1341:
+ 242              		.global	delay_tmp
+ 243              		.section	.bss.delay_tmp,"aw",%nobits
+ 244              		.align	2
+ 247              	delay_tmp:
+ 248 0000 00000000 		.space	4
+ 249              		.text
+ 250              	.Letext0:
+ 251              		.file 2 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 252              		.file 3 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\lock.h"
+ 253              		.file 4 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\_types.h"
+ 254              		.file 5 "c:\\vsarm\\arm-gcc\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 255              		.file 6 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\reent.h"
+ 256              		.file 7 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 257              		.file 8 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\stdlib.h"
+ 258              		.file 9 "Drivers/CMSIS/Include/core_cm4.h"
+ 259              		.file 10 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 260              		.file 11 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 261              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 262              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rcc.h"
+ 263              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dma.h"
+ 264              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_tim.h"
+ 265              		.file 16 "Core/Inc/main.h"
+ 266              		.file 17 "Core/Inc/common.h"
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 common.c
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:18     .text.Error_Handler:00000000 $t
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:27     .text.Error_Handler:00000000 Error_Handler
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:45     .text.LED_Blink:00000000 $t
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:53     .text.LED_Blink:00000000 LED_Blink
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:124    .text._write:00000000 $t
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:132    .text._write:00000000 _write
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:247    .bss.delay_tmp:00000000 delay_tmp
+C:\Users\zoosman\AppData\Local\Temp\ccJuYR4v.s:244    .bss.delay_tmp:00000000 $d
+
+UNDEFINED SYMBOLS
+Get_BitBandVal
+Set_BitBandVal

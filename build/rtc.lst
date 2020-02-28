@@ -1,0 +1,2103 @@
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"rtc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata.RTC_Alarm_Handler.str1.4,"aMS",%progbits,1
+  18              		.align	2
+  19              	.LC0:
+  20 0000 25326C64 		.ascii	"%2ld:%02ld:%02ld\000"
+  20      3A253032 
+  20      6C643A25 
+  20      30326C64 
+  20      00
+  21 0011 000000   		.align	2
+  22              	.LC1:
+  23 0014 25326C64 		.ascii	"%2ld/%02ld/%4ld\000"
+  23      2F253032 
+  23      6C642F25 
+  23      346C6400 
+  24              		.align	2
+  25              	.LC2:
+  26 0024 64617465 		.ascii	"date: %s\012\015\000"
+  26      3A202573 
+  26      0A0D00
+  27 002f 00       		.align	2
+  28              	.LC3:
+  29 0030 74696D65 		.ascii	"time: %s\012\015\000"
+  29      3A202573 
+  29      0A0D00
+  30              		.section	.text.RTC_Alarm_Handler,"ax",%progbits
+  31              		.align	1
+  32              		.p2align 2,,3
+  33              		.global	RTC_Alarm_Handler
+  34              		.arch armv7e-m
+  35              		.syntax unified
+  36              		.thumb
+  37              		.thumb_func
+  38              		.fpu fpv4-sp-d16
+  40              	RTC_Alarm_Handler:
+  41              	.LVL0:
+  42              	.LFB1338:
+  43              		.file 1 "Core/Src/rtc.c"
+   1:Core/Src/rtc.c **** /**
+   2:Core/Src/rtc.c ****   ******************************************************************************
+   3:Core/Src/rtc.c ****   * File Name          : RTC.c
+   4:Core/Src/rtc.c ****   * Description        : 
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 2
+
+
+   5:Core/Src/rtc.c ****   ******************************************************************************
+   6:Core/Src/rtc.c ****   * @attention
+   7:Core/Src/rtc.c ****   *
+   8:Core/Src/rtc.c ****   *
+   9:Core/Src/rtc.c ****   ******************************************************************************
+  10:Core/Src/rtc.c ****   */
+  11:Core/Src/rtc.c **** 
+  12:Core/Src/rtc.c **** /* Includes ------------------------------------------------------------------*/
+  13:Core/Src/rtc.c **** #include "rtc.h"
+  14:Core/Src/rtc.c **** 
+  15:Core/Src/rtc.c **** 
+  16:Core/Src/rtc.c **** 
+  17:Core/Src/rtc.c **** 
+  18:Core/Src/rtc.c **** 
+  19:Core/Src/rtc.c **** 
+  20:Core/Src/rtc.c **** 
+  21:Core/Src/rtc.c **** 
+  22:Core/Src/rtc.c **** 
+  23:Core/Src/rtc.c **** ////////////////////////////////////////////////////////////////////////////////
+  24:Core/Src/rtc.c **** 
+  25:Core/Src/rtc.c **** /*
+  26:Core/Src/rtc.c ****  * RTC Alarm Handler called from interrupt via flags
+  27:Core/Src/rtc.c ****  */
+  28:Core/Src/rtc.c **** void RTC_Alarm_Handler(char alarm) {
+  44              		.loc 1 28 36 view -0
+  45              		.cfi_startproc
+  46              		@ args = 0, pretend = 0, frame = 0
+  47              		@ frame_needed = 0, uses_anonymous_args = 0
+  29:Core/Src/rtc.c **** 
+  30:Core/Src/rtc.c ****   if (alarm == 'A') {
+  48              		.loc 1 30 3 view .LVU1
+  49              		.loc 1 30 6 is_stmt 0 view .LVU2
+  50 0000 4128     		cmp	r0, #65
+  51 0002 02D0     		beq	.L8
+  31:Core/Src/rtc.c ****     LED_Blink(GPIOG, GPIO_BSRR_BS14_Pos);
+  32:Core/Src/rtc.c ****   }
+  33:Core/Src/rtc.c **** 
+  34:Core/Src/rtc.c ****   if (alarm == 'B') {
+  52              		.loc 1 34 3 is_stmt 1 view .LVU3
+  53              		.loc 1 34 6 is_stmt 0 view .LVU4
+  54 0004 4228     		cmp	r0, #66
+  55 0006 04D0     		beq	.L9
+  56 0008 7047     		bx	lr
+  57              	.L8:
+  31:Core/Src/rtc.c ****     LED_Blink(GPIOG, GPIO_BSRR_BS14_Pos);
+  58              		.loc 1 31 5 is_stmt 1 view .LVU5
+  59 000a 1848     		ldr	r0, .L10
+  60              	.LVL1:
+  31:Core/Src/rtc.c ****     LED_Blink(GPIOG, GPIO_BSRR_BS14_Pos);
+  61              		.loc 1 31 5 is_stmt 0 view .LVU6
+  62 000c 0E21     		movs	r1, #14
+  63 000e FFF7FEBF 		b	LED_Blink
+  64              	.LVL2:
+  65              	.L9:
+  66              	.LBB15:
+  35:Core/Src/rtc.c ****     static char dateStr[11];
+  67              		.loc 1 35 5 is_stmt 1 view .LVU7
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 3
+
+
+  36:Core/Src/rtc.c ****     static char timeStr[11];
+  68              		.loc 1 36 5 view .LVU8
+  37:Core/Src/rtc.c ****     // uint32_t tm = LL_RTC_TIME_Get(RTC);
+  38:Core/Src/rtc.c ****     // uint32_t dt = LL_RTC_DATE_Get(RTC);
+  39:Core/Src/rtc.c ****     
+  40:Core/Src/rtc.c ****     sprintf(timeStr, "%2ld:%02ld:%02ld", LL_RTC_TIME_GetHour(RTC), LL_RTC_TIME_GetMinute(RTC), LL_R
+  69              		.loc 1 40 5 view .LVU9
+  70              	.LBB16:
+  71              	.LBI16:
+  72              		.file 2 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h"
+   1:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+   2:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   ******************************************************************************
+   3:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @file    stm32f4xx_ll_rtc.h
+   4:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @author  MCD Application Team
+   5:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief   Header file of RTC LL module.
+   6:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   ******************************************************************************
+   7:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @attention
+   8:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *
+   9:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  10:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * All rights reserved.</center></h2>
+  11:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *
+  12:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * the "License"; You may not use this file except in compliance with the
+  14:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * License. You may obtain a copy of the License at:
+  15:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *
+  17:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   ******************************************************************************
+  18:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  19:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  20:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Define to prevent recursive inclusion -------------------------------------*/
+  21:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #ifndef __STM32F4xx_LL_RTC_H
+  22:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __STM32F4xx_LL_RTC_H
+  23:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  24:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #ifdef __cplusplus
+  25:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** extern "C" {
+  26:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif
+  27:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  28:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Includes ------------------------------------------------------------------*/
+  29:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #include "stm32f4xx.h"
+  30:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  31:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @addtogroup STM32F4xx_LL_Driver
+  32:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+  33:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  34:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  35:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC)
+  36:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  37:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL RTC
+  38:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+  39:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  40:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  41:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Private types -------------------------------------------------------------*/
+  42:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Private variables ---------------------------------------------------------*/
+  43:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Private constants ---------------------------------------------------------*/
+  44:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_Private_Constants RTC Private Constants
+  45:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+  46:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  47:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Masks Definition */
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 4
+
+
+  48:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_INIT_MASK                 0xFFFFFFFFU
+  49:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_RSF_MASK                  0xFFFFFF5FU
+  50:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  51:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Write protection defines */
+  52:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_WRITE_PROTECTION_DISABLE  ((uint8_t)0xFFU)
+  53:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_WRITE_PROTECTION_ENABLE_1 ((uint8_t)0xCAU)
+  54:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_WRITE_PROTECTION_ENABLE_2 ((uint8_t)0x53U)
+  55:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  56:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Defines used to combine date & time */
+  57:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_OFFSET_WEEKDAY            24U
+  58:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_OFFSET_DAY                16U
+  59:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_OFFSET_MONTH              8U
+  60:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_OFFSET_HOUR               16U
+  61:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define RTC_OFFSET_MINUTE             8U
+  62:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  63:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+  64:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+  65:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  66:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  67:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Private macros ------------------------------------------------------------*/
+  68:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(USE_FULL_LL_DRIVER)
+  69:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_Private_Macros RTC Private Macros
+  70:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+  71:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  72:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+  73:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+  74:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  75:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /*USE_FULL_LL_DRIVER*/
+  76:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  77:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Exported types ------------------------------------------------------------*/
+  78:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(USE_FULL_LL_DRIVER)
+  79:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_ES_INIT RTC Exported Init structure
+  80:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+  81:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  82:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  83:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+  84:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  RTC Init structures definition
+  85:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+  86:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** typedef struct
+  87:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+  88:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint32_t HourFormat;   /*!< Specifies the RTC Hours Format.
+  89:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               This parameter can be a value of @ref RTC_LL_EC_HOURFORMAT
+  90:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               
+  91:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               This feature can be modified afterwards using unitary function
+  92:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               @ref LL_RTC_SetHourFormat(). */
+  93:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+  94:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint32_t AsynchPrescaler; /*!< Specifies the RTC Asynchronous Predivider value.
+  95:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               This parameter must be a number between Min_Data = 0x00 and Max_Data 
+  96:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               
+  97:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               This feature can be modified afterwards using unitary function
+  98:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               @ref LL_RTC_SetAsynchPrescaler(). */
+  99:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 100:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint32_t SynchPrescaler;  /*!< Specifies the RTC Synchronous Predivider value.
+ 101:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               This parameter must be a number between Min_Data = 0x00 and Max_Data 
+ 102:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               
+ 103:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               This feature can be modified afterwards using unitary function
+ 104:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                               @ref LL_RTC_SetSynchPrescaler(). */
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 5
+
+
+ 105:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** } LL_RTC_InitTypeDef;
+ 106:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 107:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 108:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  RTC Time structure definition
+ 109:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 110:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** typedef struct
+ 111:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 112:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint32_t TimeFormat; /*!< Specifies the RTC AM/PM Time.
+ 113:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This parameter can be a value of @ref RTC_LL_EC_TIME_FORMAT
+ 114:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 115:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This feature can be modified afterwards using unitary function @ref LL_
+ 116:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 117:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t Hours;       /*!< Specifies the RTC Time Hours.
+ 118:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This parameter must be a number between Min_Data = 0 and Max_Data = 12 
+ 119:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This parameter must be a number between Min_Data = 0 and Max_Data = 23 
+ 120:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 121:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This feature can be modified afterwards using unitary function @ref LL_
+ 122:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 123:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t Minutes;     /*!< Specifies the RTC Time Minutes.
+ 124:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This parameter must be a number between Min_Data = 0 and Max_Data = 59
+ 125:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 126:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This feature can be modified afterwards using unitary function @ref LL_
+ 127:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 128:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t Seconds;     /*!< Specifies the RTC Time Seconds.
+ 129:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This parameter must be a number between Min_Data = 0 and Max_Data = 59
+ 130:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 131:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                             This feature can be modified afterwards using unitary function @ref LL_
+ 132:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** } LL_RTC_TimeTypeDef;
+ 133:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 134:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 135:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  RTC Date structure definition
+ 136:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 137:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** typedef struct
+ 138:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 139:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t WeekDay;  /*!< Specifies the RTC Date WeekDay.
+ 140:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This parameter can be a value of @ref RTC_LL_EC_WEEKDAY
+ 141:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 142:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This feature can be modified afterwards using unitary function @ref LL_RTC
+ 143:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 144:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t Month;    /*!< Specifies the RTC Date Month.
+ 145:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This parameter can be a value of @ref RTC_LL_EC_MONTH
+ 146:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 147:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This feature can be modified afterwards using unitary function @ref LL_RTC
+ 148:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 149:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t Day;      /*!< Specifies the RTC Date Day.
+ 150:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This parameter must be a number between Min_Data = 1 and Max_Data = 31
+ 151:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 152:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This feature can be modified afterwards using unitary function @ref LL_RTC
+ 153:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 154:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t Year;     /*!< Specifies the RTC Date Year.
+ 155:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This parameter must be a number between Min_Data = 0 and Max_Data = 99
+ 156:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 157:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                          This feature can be modified afterwards using unitary function @ref LL_RTC
+ 158:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** } LL_RTC_DateTypeDef;
+ 159:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 160:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 161:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  RTC Alarm structure definition
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 6
+
+
+ 162:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 163:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** typedef struct
+ 164:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 165:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   LL_RTC_TimeTypeDef AlarmTime;  /*!< Specifies the RTC Alarm Time members. */
+ 166:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 167:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint32_t AlarmMask;            /*!< Specifies the RTC Alarm Masks.
+ 168:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       This parameter can be a value of @ref RTC_LL_EC_ALMA_MASK for
+ 169:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 170:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       This feature can be modified afterwards using unitary functio
+ 171:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       or @ref LL_RTC_ALMB_SetMask() for ALARM B
+ 172:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                  */
+ 173:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 174:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint32_t AlarmDateWeekDaySel;  /*!< Specifies the RTC Alarm is on day or WeekDay.
+ 175:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       This parameter can be a value of @ref RTC_LL_EC_ALMA_WEEKDAY_
+ 176:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 177:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       This feature can be modified afterwards using unitary functio
+ 178:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       for ALARM A or @ref LL_RTC_ALMB_EnableWeekday() or @ref LL_RT
+ 179:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                  */
+ 180:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 181:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   uint8_t AlarmDateWeekDay;      /*!< Specifies the RTC Alarm Day/WeekDay.
+ 182:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       If AlarmDateWeekDaySel set to day, this parameter  must be a 
+ 183:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 184:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       This feature can be modified afterwards using unitary functio
+ 185:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       for ALARM A or @ref LL_RTC_ALMB_SetDay() for ALARM B.
+ 186:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 187:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       If AlarmDateWeekDaySel set to Weekday, this parameter can be 
+ 188:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 189:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       This feature can be modified afterwards using unitary functio
+ 190:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                       for ALARM A or @ref LL_RTC_ALMB_SetWeekDay() for ALARM B.
+ 191:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                                  */
+ 192:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** } LL_RTC_AlarmTypeDef;
+ 193:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 194:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 195:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 196:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 197:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* USE_FULL_LL_DRIVER */
+ 198:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 199:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Exported constants --------------------------------------------------------*/
+ 200:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_Exported_Constants RTC Exported Constants
+ 201:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 202:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 203:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 204:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(USE_FULL_LL_DRIVER)
+ 205:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_FORMAT FORMAT
+ 206:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 207:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 208:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_FORMAT_BIN                  0x000000000U /*!< Binary data format */
+ 209:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_FORMAT_BCD                  0x000000001U /*!< BCD data format */
+ 210:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 211:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 212:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 213:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 214:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALMA_WEEKDAY_SELECTION RTC Alarm A Date WeekDay
+ 215:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 216:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 217:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_DATEWEEKDAYSEL_DATE    0x00000000U             /*!< Alarm A Date is selected */
+ 218:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_DATEWEEKDAYSEL_WEEKDAY RTC_ALRMAR_WDSEL        /*!< Alarm A WeekDay is selected
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 7
+
+
+ 219:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 220:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 221:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 222:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 223:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALMB_WEEKDAY_SELECTION RTC Alarm B Date WeekDay
+ 224:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 225:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 226:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_DATEWEEKDAYSEL_DATE    0x00000000U             /*!< Alarm B Date is selected */
+ 227:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_DATEWEEKDAYSEL_WEEKDAY RTC_ALRMBR_WDSEL        /*!< Alarm B WeekDay is selected
+ 228:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 229:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 230:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 231:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 232:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* USE_FULL_LL_DRIVER */
+ 233:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 234:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_GET_FLAG Get Flags Defines
+ 235:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief    Flags defines which can be used with LL_RTC_ReadReg function
+ 236:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 237:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 238:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_RECALPF                 RTC_ISR_RECALPF
+ 239:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_TAMP3F                  RTC_ISR_TAMP3F
+ 240:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_TAMP2F                  RTC_ISR_TAMP2F
+ 241:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_TAMP1F                  RTC_ISR_TAMP1F
+ 242:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_TSOVF                   RTC_ISR_TSOVF
+ 243:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_TSF                     RTC_ISR_TSF
+ 244:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_WUTF                    RTC_ISR_WUTF
+ 245:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_ALRBF                   RTC_ISR_ALRBF
+ 246:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_ALRAF                   RTC_ISR_ALRAF
+ 247:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_INITF                   RTC_ISR_INITF
+ 248:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_RSF                     RTC_ISR_RSF
+ 249:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_INITS                   RTC_ISR_INITS
+ 250:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_SHPF                    RTC_ISR_SHPF
+ 251:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_WUTWF                   RTC_ISR_WUTWF
+ 252:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_ALRBWF                  RTC_ISR_ALRBWF
+ 253:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ISR_ALRAWF                  RTC_ISR_ALRAWF
+ 254:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 255:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 256:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 257:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 258:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_IT IT Defines
+ 259:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief    IT defines which can be used with LL_RTC_ReadReg and  LL_RTC_WriteReg functions
+ 260:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 261:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 262:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CR_TSIE                     RTC_CR_TSIE
+ 263:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CR_WUTIE                    RTC_CR_WUTIE
+ 264:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CR_ALRBIE                   RTC_CR_ALRBIE
+ 265:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CR_ALRAIE                   RTC_CR_ALRAIE
+ 266:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAFCR_TAMPIE               RTC_TAFCR_TAMPIE
+ 267:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 268:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 269:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 270:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 271:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_WEEKDAY  WEEK DAY
+ 272:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 273:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 274:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WEEKDAY_MONDAY              ((uint8_t)0x01U) /*!< Monday    */
+ 275:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WEEKDAY_TUESDAY             ((uint8_t)0x02U) /*!< Tuesday   */
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 8
+
+
+ 276:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WEEKDAY_WEDNESDAY           ((uint8_t)0x03U) /*!< Wednesday */
+ 277:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WEEKDAY_THURSDAY            ((uint8_t)0x04U) /*!< Thrusday  */
+ 278:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WEEKDAY_FRIDAY              ((uint8_t)0x05U) /*!< Friday    */
+ 279:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WEEKDAY_SATURDAY            ((uint8_t)0x06U) /*!< Saturday  */
+ 280:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WEEKDAY_SUNDAY              ((uint8_t)0x07U) /*!< Sunday    */
+ 281:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 282:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 283:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 284:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 285:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_MONTH  MONTH
+ 286:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 287:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 288:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_JANUARY               ((uint8_t)0x01U)  /*!< January   */
+ 289:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_FEBRUARY              ((uint8_t)0x02U)  /*!< February  */
+ 290:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_MARCH                 ((uint8_t)0x03U)  /*!< March     */
+ 291:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_APRIL                 ((uint8_t)0x04U)  /*!< April     */
+ 292:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_MAY                   ((uint8_t)0x05U)  /*!< May       */
+ 293:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_JUNE                  ((uint8_t)0x06U)  /*!< June      */
+ 294:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_JULY                  ((uint8_t)0x07U)  /*!< July      */
+ 295:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_AUGUST                ((uint8_t)0x08U)  /*!< August    */
+ 296:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_SEPTEMBER             ((uint8_t)0x09U)  /*!< September */
+ 297:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_OCTOBER               ((uint8_t)0x10U)  /*!< October   */
+ 298:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_NOVEMBER              ((uint8_t)0x11U)  /*!< November  */
+ 299:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_MONTH_DECEMBER              ((uint8_t)0x12U)  /*!< December  */
+ 300:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 301:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 302:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 303:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 304:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_HOURFORMAT  HOUR FORMAT
+ 305:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 306:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 307:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_HOURFORMAT_24HOUR           0x00000000U           /*!< 24 hour/day format */
+ 308:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_HOURFORMAT_AMPM             RTC_CR_FMT            /*!< AM/PM hour format */
+ 309:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 310:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 311:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 312:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 313:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALARMOUT  ALARM OUTPUT
+ 314:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 315:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 316:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALARMOUT_DISABLE            0x00000000U             /*!< Output disabled */
+ 317:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALARMOUT_ALMA               RTC_CR_OSEL_0           /*!< Alarm A output enabled */
+ 318:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALARMOUT_ALMB               RTC_CR_OSEL_1           /*!< Alarm B output enabled */
+ 319:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALARMOUT_WAKEUP             RTC_CR_OSEL             /*!< Wakeup output enabled */
+ 320:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 321:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 322:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 323:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 324:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALARM_OUTPUTTYPE  ALARM OUTPUT TYPE
+ 325:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 326:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 327:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN  0x00000000U                          /*!< RTC_ALARM, whe
+ 328:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL   RTC_TAFCR_ALARMOUTTYPE /*!< RTC_ALARM, when mapped on PC
+ 329:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 330:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 331:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 332:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 9
+
+
+ 333:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_PIN PIN
+ 334:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 335:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 336:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_PIN_PC13                    RTC_TAFCR_PC13MODE    /*!< PC13 is forced to push-pull o
+ 337:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_PIN_PC14                    RTC_TAFCR_PC14MODE    /*!< PC14 is forced to push-pull o
+ 338:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_PIN_PC15                    RTC_TAFCR_PC15MODE    /*!< PC15 is forced to push-pull o
+ 339:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 340:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 341:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 342:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 343:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_OUTPUTPOLARITY_PIN  OUTPUT POLARITY PIN
+ 344:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 345:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 346:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_OUTPUTPOLARITY_PIN_HIGH     0x00000000U           /*!< Pin is high when ALRAF/ALRBF/
+ 347:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_OUTPUTPOLARITY_PIN_LOW      RTC_CR_POL            /*!< Pin is low when ALRAF/ALRBF/W
+ 348:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 349:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 350:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 351:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 352:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TIME_FORMAT TIME FORMAT
+ 353:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 354:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 355:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TIME_FORMAT_AM_OR_24        0x00000000U           /*!< AM or 24-hour format */
+ 356:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TIME_FORMAT_PM              RTC_TR_PM             /*!< PM */
+ 357:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 358:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 359:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 360:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 361:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_SHIFT_SECOND  SHIFT SECOND
+ 362:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 363:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 364:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_SHIFT_SECOND_DELAY          0x00000000U           /* Delay (seconds) = SUBFS / (PRED
+ 365:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_SHIFT_SECOND_ADVANCE        RTC_SHIFTR_ADD1S      /* Advance (seconds) = (1 - (SUBFS
+ 366:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 367:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 368:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 369:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 370:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALMA_MASK  ALARMA MASK
+ 371:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 372:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 373:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_MASK_NONE              0x00000000U             /*!< No masks applied on Alarm A
+ 374:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_MASK_DATEWEEKDAY       RTC_ALRMAR_MSK4         /*!< Date/day do not care in Ala
+ 375:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_MASK_HOURS             RTC_ALRMAR_MSK3         /*!< Hours do not care in Alarm 
+ 376:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_MASK_MINUTES           RTC_ALRMAR_MSK2         /*!< Minutes do not care in Alar
+ 377:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_MASK_SECONDS           RTC_ALRMAR_MSK1         /*!< Seconds do not care in Alar
+ 378:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_MASK_ALL               (RTC_ALRMAR_MSK4 | RTC_ALRMAR_MSK3 | RTC_ALRMAR_MSK2 | R
+ 379:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 380:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 381:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 382:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 383:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALMA_TIME_FORMAT  ALARMA TIME FORMAT
+ 384:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 385:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 386:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_TIME_FORMAT_AM         0x00000000U           /*!< AM or 24-hour format */
+ 387:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMA_TIME_FORMAT_PM         RTC_ALRMAR_PM         /*!< PM */
+ 388:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 389:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 10
+
+
+ 390:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 391:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 392:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALMB_MASK  ALARMB MASK
+ 393:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 394:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 395:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_MASK_NONE              0x00000000U             /*!< No masks applied on Alarm B
+ 396:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_MASK_DATEWEEKDAY       RTC_ALRMBR_MSK4         /*!< Date/day do not care in Ala
+ 397:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_MASK_HOURS             RTC_ALRMBR_MSK3         /*!< Hours do not care in Alarm 
+ 398:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_MASK_MINUTES           RTC_ALRMBR_MSK2         /*!< Minutes do not care in Alar
+ 399:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_MASK_SECONDS           RTC_ALRMBR_MSK1         /*!< Seconds do not care in Alar
+ 400:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_MASK_ALL               (RTC_ALRMBR_MSK4 | RTC_ALRMBR_MSK3 | RTC_ALRMBR_MSK2 | R
+ 401:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 402:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 403:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 404:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 405:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_ALMB_TIME_FORMAT  ALARMB TIME FORMAT
+ 406:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 407:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 408:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_TIME_FORMAT_AM         0x00000000U           /*!< AM or 24-hour format */
+ 409:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ALMB_TIME_FORMAT_PM         RTC_ALRMBR_PM         /*!< PM */
+ 410:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 411:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 412:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 413:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 414:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TIMESTAMP_EDGE  TIMESTAMP EDGE
+ 415:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 416:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 417:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TIMESTAMP_EDGE_RISING       0x00000000U           /*!< RTC_TS input rising edge gene
+ 418:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TIMESTAMP_EDGE_FALLING      RTC_CR_TSEDGE         /*!< RTC_TS input falling edge gen
+ 419:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 420:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 421:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 422:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 423:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TS_TIME_FORMAT  TIMESTAMP TIME FORMAT
+ 424:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 425:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 426:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TS_TIME_FORMAT_AM           0x00000000U           /*!< AM or 24-hour format */
+ 427:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TS_TIME_FORMAT_PM           RTC_TSTR_PM           /*!< PM */
+ 428:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 429:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 430:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 431:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 432:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMPER  TAMPER
+ 433:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 434:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 435:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_1                    RTC_TAFCR_TAMP1E /*!< RTC_TAMP1 input detection */
+ 436:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_TAMPER2_SUPPORT)
+ 437:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_2                    RTC_TAFCR_TAMP2E /*!< RTC_TAMP2 input detection */
+ 438:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_TAMPER2_SUPPORT */
+ 439:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 440:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 441:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 442:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 443:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMPER_MASK  TAMPER MASK
+ 444:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 445:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 446:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_MASK_TAMPER1         RTC_TAFCR_TAMP1MF /*!< Tamper 1 event generates a trigge
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 11
+
+
+ 447:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_TAMPER2_SUPPORT)
+ 448:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_MASK_TAMPER2         RTC_TAFCR_TAMP2MF /*!< Tamper 2 event generates a trigge
+ 449:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_TAMPER2_SUPPORT */
+ 450:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 451:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 452:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 453:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 454:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMPER_NOERASE  TAMPER NO ERASE
+ 455:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 456:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 457:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_NOERASE_TAMPER1      RTC_TAFCR_TAMP1NOERASE /*!< Tamper 1 event does not eras
+ 458:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_TAMPER2_SUPPORT)
+ 459:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_NOERASE_TAMPER2      RTC_TAFCR_TAMP2NOERASE /*!< Tamper 2 event does not eras
+ 460:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_TAMPER2_SUPPORT */
+ 461:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 462:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 463:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 464:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 465:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_TAFCR_TAMPPRCH)
+ 466:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMPER_DURATION  TAMPER DURATION
+ 467:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 468:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 469:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_DURATION_1RTCCLK     0x00000000U                             /*!< Tamper pins
+ 470:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_DURATION_2RTCCLK     RTC_TAFCR_TAMPPRCH_0  /*!< Tamper pins are pre-charged b
+ 471:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_DURATION_4RTCCLK     RTC_TAFCR_TAMPPRCH_1  /*!< Tamper pins are pre-charged b
+ 472:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_DURATION_8RTCCLK     RTC_TAFCR_TAMPPRCH    /*!< Tamper pins are pre-charged b
+ 473:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 474:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 475:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 476:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_TAFCR_TAMPPRCH */
+ 477:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 478:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_TAFCR_TAMPFLT)
+ 479:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMPER_FILTER  TAMPER FILTER
+ 480:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 481:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 482:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_FILTER_DISABLE       0x00000000U                              /*!< Tamper fil
+ 483:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_FILTER_2SAMPLE       RTC_TAFCR_TAMPFLT_0    /*!< Tamper is activated after 2 
+ 484:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_FILTER_4SAMPLE       RTC_TAFCR_TAMPFLT_1    /*!< Tamper is activated after 4 
+ 485:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_FILTER_8SAMPLE       RTC_TAFCR_TAMPFLT      /*!< Tamper is activated after 8 
+ 486:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 487:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 488:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 489:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_TAFCR_TAMPFLT */
+ 490:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 491:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_TAFCR_TAMPFREQ)
+ 492:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMPER_SAMPLFREQDIV  TAMPER SAMPLING FREQUENCY DIVIDER
+ 493:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 494:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 495:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_32768   0x00000000U                                             
+ 496:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_16384   RTC_TAFCR_TAMPFREQ_0                           /*!< Each
+ 497:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_8192    RTC_TAFCR_TAMPFREQ_1                           /*!< Each
+ 498:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_4096    (RTC_TAFCR_TAMPFREQ_1 | RTC_TAFCR_TAMPFREQ_0) /*!< Each 
+ 499:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_2048    RTC_TAFCR_TAMPFREQ_2                           /*!< Each
+ 500:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_1024    (RTC_TAFCR_TAMPFREQ_2 | RTC_TAFCR_TAMPFREQ_0) /*!< Each 
+ 501:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_512     (RTC_TAFCR_TAMPFREQ_2 | RTC_TAFCR_TAMPFREQ_1) /*!< Each 
+ 502:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_SAMPLFREQDIV_256     RTC_TAFCR_TAMPFREQ                             /*!< Each
+ 503:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 12
+
+
+ 504:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 505:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 506:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_TAFCR_TAMPFREQ */
+ 507:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 508:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMPER_ACTIVELEVEL  TAMPER ACTIVE LEVEL
+ 509:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 510:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 511:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_ACTIVELEVEL_TAMP1    RTC_TAFCR_TAMP1TRG /*!< RTC_TAMP1 input falling edge (if
+ 512:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_TAMPER2_SUPPORT)
+ 513:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TAMPER_ACTIVELEVEL_TAMP2    RTC_TAFCR_TAMP2TRG /*!< RTC_TAMP2 input falling edge (if
+ 514:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_TAMPER2_SUPPORT */
+ 515:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 516:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 517:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 518:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 519:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_WAKEUPCLOCK_DIV  WAKEUP CLOCK DIV
+ 520:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 521:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 522:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WAKEUPCLOCK_DIV_16          0x00000000U                           /*!< RTC/16 clock 
+ 523:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WAKEUPCLOCK_DIV_8           (RTC_CR_WUCKSEL_0)                    /*!< RTC/8 clock i
+ 524:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WAKEUPCLOCK_DIV_4           (RTC_CR_WUCKSEL_1)                    /*!< RTC/4 clock i
+ 525:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WAKEUPCLOCK_DIV_2           (RTC_CR_WUCKSEL_1 | RTC_CR_WUCKSEL_0) /*!< RTC/2 clock i
+ 526:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WAKEUPCLOCK_CKSPRE          (RTC_CR_WUCKSEL_2)                    /*!< ck_spre (usua
+ 527:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WAKEUPCLOCK_CKSPRE_WUT      (RTC_CR_WUCKSEL_2 | RTC_CR_WUCKSEL_1) /*!< ck_spre (usua
+ 528:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 529:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 530:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 531:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 532:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_BKP  BACKUP
+ 533:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 534:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 535:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR0                     0x00000000U
+ 536:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR1                     0x00000001U
+ 537:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR2                     0x00000002U
+ 538:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR3                     0x00000003U
+ 539:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR4                     0x00000004U
+ 540:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if RTC_BKP_NUMBER > 5
+ 541:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR5                     0x00000005U
+ 542:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR6                     0x00000006U
+ 543:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR7                     0x00000007U
+ 544:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR8                     0x00000008U
+ 545:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR9                     0x00000009U
+ 546:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR10                    0x0000000AU
+ 547:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR11                    0x0000000BU
+ 548:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR12                    0x0000000CU
+ 549:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR13                    0x0000000DU
+ 550:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR14                    0x0000000EU
+ 551:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR15                    0x0000000FU
+ 552:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_BKP_NUMBER > 5 */
+ 553:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 554:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if RTC_BKP_NUMBER > 16
+ 555:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR16                    0x00000010U
+ 556:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR17                    0x00000011U
+ 557:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR18                    0x00000012U
+ 558:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_BKP_DR19                    0x00000013U
+ 559:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif /* RTC_BKP_NUMBER > 16 */
+ 560:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 13
+
+
+ 561:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 562:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 563:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 564:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_CALIB_OUTPUT  Calibration output
+ 565:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 566:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 567:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_OUTPUT_NONE           0x00000000U                 /*!< Calibration output disa
+ 568:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_OUTPUT_1HZ            (RTC_CR_COE | RTC_CR_COSEL) /*!< Calibration output is 1
+ 569:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_OUTPUT_512HZ          (RTC_CR_COE)                /*!< Calibration output is 5
+ 570:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 571:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 572:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 573:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 574:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_CALIB_SIGN Coarse digital calibration sign
+ 575:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 576:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 577:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_SIGN_POSITIVE         0x00000000U           /*!< Positive calibration: calenda
+ 578:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_SIGN_NEGATIVE         RTC_CALIBR_DCS        /*!< Negative calibration: calenda
+ 579:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 580:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 581:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 582:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 583:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_CALIB_INSERTPULSE  Calibration pulse insertion 
+ 584:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 585:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 586:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_INSERTPULSE_NONE      0x00000000U           /*!< No RTCCLK pulses are added */
+ 587:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_INSERTPULSE_SET       RTC_CALR_CALP         /*!< One RTCCLK pulse is effective
+ 588:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 589:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 590:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 591:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 592:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_CALIB_PERIOD  Calibration period
+ 593:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 594:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 595:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_PERIOD_32SEC          0x00000000U           /*!< Use a 32-second calibration c
+ 596:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_PERIOD_16SEC          RTC_CALR_CALW16       /*!< Use a 16-second calibration c
+ 597:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_CALIB_PERIOD_8SEC           RTC_CALR_CALW8        /*!< Use a 8-second calibration cy
+ 598:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 599:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 600:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 601:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 602:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TSINSEL  TIMESTAMP mapping
+ 603:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 604:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 605:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TimeStampPin_Default        0x00000000U           /*!< Use RTC_AF1 as TIMESTAMP */
+ 606:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_AF2_SUPPORT)
+ 607:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TimeStampPin_Pos1           RTC_TAFCR_TSINSEL     /*!< Use RTC_AF2 as TIMESTAMP */
+ 608:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif
+ 609:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 610:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 611:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 612:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 613:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EC_TAMP1INSEL  TAMPER1 mapping
+ 614:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 615:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 616:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TamperPin_Default           0x00000000U           /*!< Use RTC_AF1 as TAMPER1 */
+ 617:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #if defined(RTC_AF2_SUPPORT)
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 14
+
+
+ 618:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_TamperPin_Pos1              RTC_TAFCR_TAMP1INSEL  /*!< Use RTC_AF2 as TAMPER1 */
+ 619:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #endif
+ 620:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 621:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 622:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 623:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 624:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 625:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 626:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 627:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 628:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Exported macro ------------------------------------------------------------*/
+ 629:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_Exported_Macros RTC Exported Macros
+ 630:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 631:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 632:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 633:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EM_WRITE_READ Common Write and read registers Macros
+ 634:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 635:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 636:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 637:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 638:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Write a value in RTC register
+ 639:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __INSTANCE__ RTC Instance
+ 640:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __REG__ Register to be written
+ 641:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __VALUE__ Value to be written in the register
+ 642:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 643:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 644:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG(__INSTANCE__->__REG__, (__VALUE
+ 645:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 646:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 647:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Read a value in RTC register
+ 648:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __INSTANCE__ RTC Instance
+ 649:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __REG__ Register to be read
+ 650:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Register value
+ 651:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 652:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define LL_RTC_ReadReg(__INSTANCE__, __REG__) READ_REG(__INSTANCE__->__REG__)
+ 653:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 654:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 655:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 656:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 657:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EM_Convert Convert helper Macros
+ 658:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 659:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 660:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 661:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 662:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to convert a value from 2 digit decimal format to BCD format
+ 663:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __VALUE__ Byte to be converted
+ 664:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Converted byte
+ 665:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 666:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_CONVERT_BIN2BCD(__VALUE__) (uint8_t)((((__VALUE__) / 10U) << 4U) | ((__VALUE__) % 
+ 667:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 668:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 669:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to convert a value from BCD format to 2 digit decimal format
+ 670:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __VALUE__ BCD value to be converted
+ 671:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Converted byte
+ 672:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 673:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_CONVERT_BCD2BIN(__VALUE__) (uint8_t)(((uint8_t)((__VALUE__) & (uint8_t)0xF0U) >> (
+ 674:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 15
+
+
+ 675:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 676:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 677:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 678:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 679:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EM_Date Date helper Macros
+ 680:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 681:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 682:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 683:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 684:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to retrieve weekday.
+ 685:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __RTC_DATE__ Date returned by @ref  LL_RTC_DATE_Get function.
+ 686:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+ 687:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_MONDAY
+ 688:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
+ 689:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
+ 690:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
+ 691:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
+ 692:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
+ 693:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+ 694:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 695:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_GET_WEEKDAY(__RTC_DATE__) (((__RTC_DATE__) >> RTC_OFFSET_WEEKDAY) & 0x000000FFU)
+ 696:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 697:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 698:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to retrieve Year in BCD format
+ 699:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __RTC_DATE__ Value returned by @ref  LL_RTC_DATE_Get
+ 700:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Year in BCD format (0x00 . . . 0x99)
+ 701:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 702:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_GET_YEAR(__RTC_DATE__) ((__RTC_DATE__) & 0x000000FFU)
+ 703:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 704:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 705:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to retrieve Month in BCD format
+ 706:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __RTC_DATE__ Value returned by @ref  LL_RTC_DATE_Get
+ 707:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+ 708:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JANUARY
+ 709:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_FEBRUARY
+ 710:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_MARCH
+ 711:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_APRIL
+ 712:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_MAY
+ 713:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JUNE
+ 714:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JULY
+ 715:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_AUGUST
+ 716:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_SEPTEMBER
+ 717:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_OCTOBER
+ 718:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_NOVEMBER
+ 719:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_DECEMBER
+ 720:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 721:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_GET_MONTH(__RTC_DATE__) (((__RTC_DATE__) >>RTC_OFFSET_MONTH) & 0x000000FFU)
+ 722:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 723:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 724:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to retrieve Day in BCD format
+ 725:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __RTC_DATE__ Value returned by @ref  LL_RTC_DATE_Get
+ 726:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Day in BCD format (0x01 . . . 0x31)
+ 727:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 728:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_GET_DAY(__RTC_DATE__) (((__RTC_DATE__) >>RTC_OFFSET_DAY) & 0x000000FFU)
+ 729:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 730:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 731:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 16
+
+
+ 732:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 733:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 734:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EM_Time Time helper Macros
+ 735:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 736:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 737:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 738:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 739:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to retrieve hour in BCD format
+ 740:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __RTC_TIME__ RTC time returned by @ref LL_RTC_TIME_Get function
+ 741:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Hours in BCD format (0x01. . .0x12 or between Min_Data=0x00 and Max_Data=0x23)
+ 742:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 743:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_GET_HOUR(__RTC_TIME__) (((__RTC_TIME__) >> RTC_OFFSET_HOUR) & 0x000000FFU)
+ 744:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 745:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 746:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to retrieve minute in BCD format
+ 747:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __RTC_TIME__ RTC time returned by @ref LL_RTC_TIME_Get function
+ 748:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Minutes in BCD format (0x00. . .0x59)
+ 749:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 750:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_GET_MINUTE(__RTC_TIME__) (((__RTC_TIME__) >> RTC_OFFSET_MINUTE) & 0x000000FFU)
+ 751:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 752:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 753:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Helper macro to retrieve second in BCD format
+ 754:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  __RTC_TIME__ RTC time returned by @ref LL_RTC_TIME_Get function
+ 755:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Seconds in  format (0x00. . .0x59)
+ 756:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 757:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** #define __LL_RTC_GET_SECOND(__RTC_TIME__) ((__RTC_TIME__) & 0x000000FFU)
+ 758:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 759:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 760:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 761:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 762:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 763:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 764:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+ 765:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 766:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 767:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /* Exported functions --------------------------------------------------------*/
+ 768:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_Exported_Functions RTC Exported Functions
+ 769:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 770:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 771:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 772:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EF_Configuration Configuration
+ 773:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+ 774:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 775:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 776:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 777:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Hours format (24 hour/day or AM/PM hour format)
+ 778:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+ 779:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+ 780:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           FMT           LL_RTC_SetHourFormat
+ 781:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 782:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  HourFormat This parameter can be one of the following values:
+ 783:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_HOURFORMAT_24HOUR
+ 784:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_HOURFORMAT_AMPM
+ 785:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 786:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 787:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_SetHourFormat(RTC_TypeDef *RTCx, uint32_t HourFormat)
+ 788:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 17
+
+
+ 789:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->CR, RTC_CR_FMT, HourFormat);
+ 790:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 791:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 792:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 793:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Hours format (24 hour/day or AM/PM hour format)
+ 794:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           FMT           LL_RTC_GetHourFormat
+ 795:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 796:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+ 797:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_HOURFORMAT_24HOUR
+ 798:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_HOURFORMAT_AMPM
+ 799:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 800:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_GetHourFormat(RTC_TypeDef *RTCx)
+ 801:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 802:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_FMT));
+ 803:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 804:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 805:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 806:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Select the flag to be routed to RTC_ALARM output
+ 807:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+ 808:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           OSEL          LL_RTC_SetAlarmOutEvent
+ 809:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 810:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  AlarmOutput This parameter can be one of the following values:
+ 811:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_DISABLE
+ 812:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_ALMA
+ 813:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_ALMB
+ 814:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_WAKEUP
+ 815:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 816:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 817:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_SetAlarmOutEvent(RTC_TypeDef *RTCx, uint32_t AlarmOutput)
+ 818:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 819:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->CR, RTC_CR_OSEL, AlarmOutput);
+ 820:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 821:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 822:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 823:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get the flag to be routed to RTC_ALARM output
+ 824:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           OSEL          LL_RTC_GetAlarmOutEvent
+ 825:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 826:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+ 827:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_DISABLE
+ 828:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_ALMA
+ 829:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_ALMB
+ 830:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARMOUT_WAKEUP
+ 831:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 832:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_GetAlarmOutEvent(RTC_TypeDef *RTCx)
+ 833:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 834:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_OSEL));
+ 835:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 836:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 837:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 838:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set RTC_ALARM output type (ALARM in push-pull or open-drain output)
+ 839:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Used only when RTC_ALARM is mapped on PC13
+ 840:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   If all RTC alternate functions are disabled and PC13MODE = 1, PC13VALUE configures the
+ 841:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         PC13 output data
+ 842:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        ALARMOUTTYPE  LL_RTC_SetAlarmOutputType
+ 843:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 844:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Output This parameter can be one of the following values:
+ 845:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 18
+
+
+ 846:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
+ 847:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 848:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 849:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_SetAlarmOutputType(RTC_TypeDef *RTCx, uint32_t Output)
+ 850:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 851:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->TAFCR, RTC_TAFCR_ALARMOUTTYPE, Output);
+ 852:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 853:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 854:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 855:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get RTC_ALARM output type (ALARM in push-pull or open-drain output)
+ 856:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   used only when RTC_ALARM is mapped on PC13
+ 857:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   If all RTC alternate functions are disabled and PC13MODE = 1, PC13VALUE configures the
+ 858:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         PC13 output data
+ 859:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        ALARMOUTTYPE  LL_RTC_GetAlarmOutputType
+ 860:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 861:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+ 862:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN
+ 863:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
+ 864:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 865:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_GetAlarmOutputType(RTC_TypeDef *RTCx)
+ 866:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 867:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->TAFCR, RTC_TAFCR_ALARMOUTTYPE));
+ 868:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 869:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 870:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 871:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Enable push-pull output on PC13, PC14 and/or PC15
+ 872:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   PC13 forced to push-pull output if all RTC alternate functions are disabled
+ 873:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   PC14 and PC15 forced to push-pull output if LSE is disabled
+ 874:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        PC13MODE  LL_RTC_EnablePushPullMode\n
+ 875:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        PC14MODE  LL_RTC_EnablePushPullMode\n
+ 876:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        PC15MODE  LL_RTC_EnablePushPullMode
+ 877:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 878:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  PinMask This parameter can be a combination of the following values:
+ 879:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC13
+ 880:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC14
+ 881:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC15
+ 882:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 883:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 884:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_EnablePushPullMode(RTC_TypeDef *RTCx, uint32_t PinMask)
+ 885:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 886:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   SET_BIT(RTCx->TAFCR, PinMask);
+ 887:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 888:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 889:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 890:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Disable push-pull output on PC13, PC14 and/or PC15
+ 891:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   PC13, PC14 and/or PC15 are controlled by the GPIO configuration registers.
+ 892:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         Consequently PC13, PC14 and/or PC15 are floating in Standby mode.
+ 893:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        PC13MODE      LL_RTC_DisablePushPullMode\n
+ 894:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TAFCR        PC14MODE      LL_RTC_DisablePushPullMode\n
+ 895:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TAFCR        PC15MODE      LL_RTC_DisablePushPullMode
+ 896:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 897:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  PinMask This parameter can be a combination of the following values:
+ 898:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC13
+ 899:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC14
+ 900:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC15
+ 901:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 902:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 19
+
+
+ 903:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DisablePushPullMode(RTC_TypeDef* RTCx, uint32_t PinMask)
+ 904:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 905:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   CLEAR_BIT(RTCx->TAFCR, PinMask);
+ 906:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 907:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 908:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 909:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set PC14 and/or PC15 to high level.
+ 910:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Output data configuration is possible if the LSE is disabled and PushPull output is ena
+ 911:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        PC14VALUE     LL_RTC_SetOutputPin\n
+ 912:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TAFCR        PC15VALUE     LL_RTC_SetOutputPin
+ 913:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 914:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  PinMask This parameter can be a combination of the following values:
+ 915:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC14
+ 916:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC15
+ 917:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 918:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 919:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_SetOutputPin(RTC_TypeDef* RTCx, uint32_t PinMask)
+ 920:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 921:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   SET_BIT(RTCx->TAFCR, (PinMask >> 1));
+ 922:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 923:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 924:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 925:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set PC14 and/or PC15 to low level.
+ 926:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Output data configuration is possible if the LSE is disabled and PushPull output is ena
+ 927:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TAFCR        PC14VALUE     LL_RTC_ResetOutputPin\n
+ 928:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TAFCR        PC15VALUE     LL_RTC_ResetOutputPin
+ 929:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 930:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  PinMask This parameter can be a combination of the following values:
+ 931:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC14
+ 932:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_PIN_PC15
+ 933:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 934:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 935:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_ResetOutputPin(RTC_TypeDef* RTCx, uint32_t PinMask)
+ 936:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 937:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   CLEAR_BIT(RTCx->TAFCR, (PinMask >> 1));
+ 938:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 939:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 940:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 941:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Enable initialization mode
+ 942:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Initialization mode is used to program time and date register (RTC_TR and RTC_DR)
+ 943:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         and prescaler register (RTC_PRER).
+ 944:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         Counters are stopped and start counting from the new value when INIT is reset.
+ 945:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll ISR          INIT          LL_RTC_EnableInitMode
+ 946:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 947:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 948:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 949:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_EnableInitMode(RTC_TypeDef *RTCx)
+ 950:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 951:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   /* Set the Initialization mode */
+ 952:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   WRITE_REG(RTCx->ISR, RTC_INIT_MASK);
+ 953:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 954:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 955:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 956:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Disable initialization mode (Free running mode)
+ 957:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll ISR          INIT          LL_RTC_DisableInitMode
+ 958:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 959:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 20
+
+
+ 960:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 961:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DisableInitMode(RTC_TypeDef *RTCx)
+ 962:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 963:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   /* Exit Initialization mode */
+ 964:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   WRITE_REG(RTCx->ISR, (uint32_t)~RTC_ISR_INIT);
+ 965:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 966:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 967:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 968:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Output polarity (pin is low when ALRAF/ALRBF/WUTF is asserted)
+ 969:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+ 970:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           POL           LL_RTC_SetOutputPolarity
+ 971:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 972:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Polarity This parameter can be one of the following values:
+ 973:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_HIGH
+ 974:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_LOW
+ 975:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ 976:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 977:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_SetOutputPolarity(RTC_TypeDef *RTCx, uint32_t Polarity)
+ 978:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 979:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->CR, RTC_CR_POL, Polarity);
+ 980:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 981:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 982:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 983:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Output polarity
+ 984:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           POL           LL_RTC_GetOutputPolarity
+ 985:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+ 986:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+ 987:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_HIGH
+ 988:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_LOW
+ 989:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ 990:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_GetOutputPolarity(RTC_TypeDef *RTCx)
+ 991:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 992:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_POL));
+ 993:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 994:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+ 995:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+ 996:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Enable Bypass the shadow registers
+ 997:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+ 998:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           BYPSHAD       LL_RTC_EnableShadowRegBypass
+ 999:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1000:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1001:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1002:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_EnableShadowRegBypass(RTC_TypeDef *RTCx)
+1003:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1004:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   SET_BIT(RTCx->CR, RTC_CR_BYPSHAD);
+1005:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1006:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1007:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1008:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Disable Bypass the shadow registers
+1009:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           BYPSHAD       LL_RTC_DisableShadowRegBypass
+1010:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1011:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1012:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1013:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DisableShadowRegBypass(RTC_TypeDef *RTCx)
+1014:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1015:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   CLEAR_BIT(RTCx->CR, RTC_CR_BYPSHAD);
+1016:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 21
+
+
+1017:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1018:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1019:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Check if Shadow registers bypass is enabled or not.
+1020:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           BYPSHAD       LL_RTC_IsShadowRegBypassEnabled
+1021:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1022:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval State of bit (1 or 0).
+1023:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1024:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_IsShadowRegBypassEnabled(RTC_TypeDef *RTCx)
+1025:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1026:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (READ_BIT(RTCx->CR, RTC_CR_BYPSHAD) == (RTC_CR_BYPSHAD));
+1027:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1028:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1029:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1030:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Enable RTC_REFIN reference clock detection (50 or 60 Hz)
+1031:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1032:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+1033:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           REFCKON       LL_RTC_EnableRefClock
+1034:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1035:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1036:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1037:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_EnableRefClock(RTC_TypeDef *RTCx)
+1038:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1039:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   SET_BIT(RTCx->CR, RTC_CR_REFCKON);
+1040:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1041:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1042:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1043:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Disable RTC_REFIN reference clock detection (50 or 60 Hz)
+1044:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1045:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+1046:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           REFCKON       LL_RTC_DisableRefClock
+1047:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1048:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1049:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1050:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DisableRefClock(RTC_TypeDef *RTCx)
+1051:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1052:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   CLEAR_BIT(RTCx->CR, RTC_CR_REFCKON);
+1053:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1054:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1055:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1056:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Asynchronous prescaler factor
+1057:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll PRER         PREDIV_A      LL_RTC_SetAsynchPrescaler
+1058:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1059:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  AsynchPrescaler Value between Min_Data = 0 and Max_Data = 0x7F
+1060:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1061:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1062:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_SetAsynchPrescaler(RTC_TypeDef *RTCx, uint32_t AsynchPrescaler)
+1063:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1064:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->PRER, RTC_PRER_PREDIV_A, AsynchPrescaler << RTC_PRER_PREDIV_A_Pos);
+1065:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1066:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1067:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1068:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Synchronous prescaler factor
+1069:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll PRER         PREDIV_S      LL_RTC_SetSynchPrescaler
+1070:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1071:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  SynchPrescaler Value between Min_Data = 0 and Max_Data = 0x7FFF
+1072:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1073:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 22
+
+
+1074:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_SetSynchPrescaler(RTC_TypeDef *RTCx, uint32_t SynchPrescaler)
+1075:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1076:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->PRER, RTC_PRER_PREDIV_S, SynchPrescaler);
+1077:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1078:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1079:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1080:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Asynchronous prescaler factor
+1081:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll PRER         PREDIV_A      LL_RTC_GetAsynchPrescaler
+1082:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1083:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Value between Min_Data = 0 and Max_Data = 0x7F
+1084:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1085:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_GetAsynchPrescaler(RTC_TypeDef *RTCx)
+1086:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1087:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->PRER, RTC_PRER_PREDIV_A) >> RTC_PRER_PREDIV_A_Pos);
+1088:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1089:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1090:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1091:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Synchronous prescaler factor
+1092:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll PRER         PREDIV_S      LL_RTC_GetSynchPrescaler
+1093:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1094:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Value between Min_Data = 0 and Max_Data = 0x7FFF
+1095:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1096:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_GetSynchPrescaler(RTC_TypeDef *RTCx)
+1097:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1098:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->PRER, RTC_PRER_PREDIV_S));
+1099:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1100:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1101:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1102:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Enable the write protection for RTC registers.
+1103:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll WPR          KEY           LL_RTC_EnableWriteProtection
+1104:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1105:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1106:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1107:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_EnableWriteProtection(RTC_TypeDef *RTCx)
+1108:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1109:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   WRITE_REG(RTCx->WPR, RTC_WRITE_PROTECTION_DISABLE);
+1110:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1111:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1112:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1113:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Disable the write protection for RTC registers.
+1114:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll WPR          KEY           LL_RTC_DisableWriteProtection
+1115:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1116:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1117:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1118:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DisableWriteProtection(RTC_TypeDef *RTCx)
+1119:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1120:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   WRITE_REG(RTCx->WPR, RTC_WRITE_PROTECTION_ENABLE_1);
+1121:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   WRITE_REG(RTCx->WPR, RTC_WRITE_PROTECTION_ENABLE_2);
+1122:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1123:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1124:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1125:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+1126:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1127:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1128:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EF_Time Time
+1129:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+1130:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 23
+
+
+1131:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1132:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1133:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set time format (AM/24-hour or PM notation)
+1134:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1135:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+1136:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           PM            LL_RTC_TIME_SetFormat
+1137:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1138:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  TimeFormat This parameter can be one of the following values:
+1139:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_TIME_FORMAT_AM_OR_24
+1140:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_TIME_FORMAT_PM
+1141:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1142:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1143:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_SetFormat(RTC_TypeDef *RTCx, uint32_t TimeFormat)
+1144:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1145:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->TR, RTC_TR_PM, TimeFormat);
+1146:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1147:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1148:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1149:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get time format (AM or PM notation)
+1150:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1151:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1152:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note Read either RTC_SSR or RTC_TR locks the values in the higher-order calendar
+1153:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       shadow registers until RTC_DR is read (LL_RTC_ReadReg(RTC, DR)).
+1154:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           PM            LL_RTC_TIME_GetFormat
+1155:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1156:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+1157:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_TIME_FORMAT_AM_OR_24
+1158:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_TIME_FORMAT_PM
+1159:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1160:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_TIME_GetFormat(RTC_TypeDef *RTCx)
+1161:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1162:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->TR, RTC_TR_PM));
+1163:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1164:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1165:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1166:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Hours in BCD format
+1167:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1168:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+1169:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BIN2BCD is available to convert hour from binary to BCD for
+1170:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           HT            LL_RTC_TIME_SetHour\n
+1171:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           HU            LL_RTC_TIME_SetHour
+1172:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1173:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Hours Value between Min_Data=0x01 and Max_Data=0x12 or between Min_Data=0x00 and Max_Da
+1174:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1175:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1176:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_SetHour(RTC_TypeDef *RTCx, uint32_t Hours)
+1177:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1178:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->TR, (RTC_TR_HT | RTC_TR_HU),
+1179:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****              (((Hours & 0xF0U) << (RTC_TR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_TR_HU_Pos)));
+1180:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1181:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1182:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1183:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Hours in BCD format
+1184:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1185:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1186:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note Read either RTC_SSR or RTC_TR locks the values in the higher-order calendar
+1187:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       shadow registers until RTC_DR is read (LL_RTC_ReadReg(RTC, DR)).
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 24
+
+
+1188:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BCD2BIN is available to convert hour from BCD to
+1189:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       Binary format
+1190:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           HT            LL_RTC_TIME_GetHour\n
+1191:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           HU            LL_RTC_TIME_GetHour
+1192:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1193:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Value between Min_Data=0x01 and Max_Data=0x12 or between Min_Data=0x00 and Max_Data=0x2
+1194:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1195:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_TIME_GetHour(RTC_TypeDef *RTCx)
+  73              		.loc 2 1195 26 view .LVU10
+  74              	.LBB17:
+1196:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1197:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)((READ_BIT(RTCx->TR, (RTC_TR_HT | RTC_TR_HU))) >> RTC_TR_HU_Pos);
+  75              		.loc 2 1197 3 view .LVU11
+  76              	.LBE17:
+  77              	.LBE16:
+  78              	.LBE15:
+  28:Core/Src/rtc.c **** 
+  79              		.loc 1 28 36 is_stmt 0 view .LVU12
+  80 0012 30B5     		push	{r4, r5, lr}
+  81              	.LCFI0:
+  82              		.cfi_def_cfa_offset 12
+  83              		.cfi_offset 4, -12
+  84              		.cfi_offset 5, -8
+  85              		.cfi_offset 14, -4
+  86              	.LBB36:
+  87              	.LBB20:
+  88              	.LBB18:
+  89              		.loc 2 1197 22 view .LVU13
+  90 0014 164C     		ldr	r4, .L10+4
+  91              	.LBE18:
+  92              	.LBE20:
+  93              		.loc 1 40 5 view .LVU14
+  94 0016 1749     		ldr	r1, .L10+8
+  95              	.LBB21:
+  96              	.LBB19:
+  97              		.loc 2 1197 22 view .LVU15
+  98 0018 2268     		ldr	r2, [r4]
+  99              	.LVL3:
+ 100              		.loc 2 1197 22 view .LVU16
+ 101              	.LBE19:
+ 102              	.LBE21:
+ 103              	.LBB22:
+ 104              	.LBI22:
+1198:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1199:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1200:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1201:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Minutes in BCD format
+1202:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1203:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+1204:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BIN2BCD is available to convert Minutes from binary to BCD 
+1205:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           MNT           LL_RTC_TIME_SetMinute\n
+1206:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           MNU           LL_RTC_TIME_SetMinute
+1207:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1208:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Minutes Value between Min_Data=0x00 and Max_Data=0x59
+1209:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1210:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1211:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_SetMinute(RTC_TypeDef *RTCx, uint32_t Minutes)
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 25
+
+
+1212:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1213:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->TR, (RTC_TR_MNT | RTC_TR_MNU),
+1214:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****              (((Minutes & 0xF0U) << (RTC_TR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_TR_MNU_Pos))
+1215:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1216:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1217:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1218:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Minutes in BCD format
+1219:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1220:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1221:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note Read either RTC_SSR or RTC_TR locks the values in the higher-order calendar
+1222:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       shadow registers until RTC_DR is read (LL_RTC_ReadReg(RTC, DR)).
+1223:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BCD2BIN is available to convert minute from BCD
+1224:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       to Binary format
+1225:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           MNT           LL_RTC_TIME_GetMinute\n
+1226:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           MNU           LL_RTC_TIME_GetMinute
+1227:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1228:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Value between Min_Data=0x00 and Max_Data=0x59
+1229:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1230:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_TIME_GetMinute(RTC_TypeDef *RTCx)
+ 105              		.loc 2 1230 26 is_stmt 1 view .LVU17
+ 106              	.LBB23:
+1231:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1232:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->TR, (RTC_TR_MNT | RTC_TR_MNU))>> RTC_TR_MNU_Pos);
+ 107              		.loc 2 1232 3 view .LVU18
+ 108              		.loc 2 1232 21 is_stmt 0 view .LVU19
+ 109 001a 2368     		ldr	r3, [r4]
+ 110              	.LVL4:
+ 111              		.loc 2 1232 21 view .LVU20
+ 112              	.LBE23:
+ 113              	.LBE22:
+ 114              	.LBB24:
+ 115              	.LBI24:
+1233:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1234:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1235:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1236:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Seconds in BCD format
+1237:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1238:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+1239:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BIN2BCD is available to convert Seconds from binary to BCD 
+1240:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           ST            LL_RTC_TIME_SetSecond\n
+1241:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           SU            LL_RTC_TIME_SetSecond
+1242:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1243:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Seconds Value between Min_Data=0x00 and Max_Data=0x59
+1244:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1245:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1246:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_SetSecond(RTC_TypeDef *RTCx, uint32_t Seconds)
+1247:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1248:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->TR, (RTC_TR_ST | RTC_TR_SU),
+1249:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****              (((Seconds & 0xF0U) << (RTC_TR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_TR_SU_Pos)));
+1250:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1251:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1252:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1253:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Seconds in BCD format
+1254:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1255:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1256:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note Read either RTC_SSR or RTC_TR locks the values in the higher-order calendar
+1257:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       shadow registers until RTC_DR is read (LL_RTC_ReadReg(RTC, DR)).
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 26
+
+
+1258:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BCD2BIN is available to convert Seconds from BCD
+1259:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       to Binary format
+1260:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           ST            LL_RTC_TIME_GetSecond\n
+1261:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           SU            LL_RTC_TIME_GetSecond
+1262:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1263:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Value between Min_Data=0x00 and Max_Data=0x59
+1264:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1265:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_TIME_GetSecond(RTC_TypeDef *RTCx)
+ 116              		.loc 2 1265 26 is_stmt 1 view .LVU21
+ 117              	.LBB25:
+1266:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1267:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->TR, (RTC_TR_ST | RTC_TR_SU)) >> RTC_TR_SU_Pos);
+ 118              		.loc 2 1267 3 view .LVU22
+ 119              		.loc 2 1267 21 is_stmt 0 view .LVU23
+ 120 001c 2568     		ldr	r5, [r4]
+ 121              	.LVL5:
+ 122              		.loc 2 1267 21 view .LVU24
+ 123              	.LBE25:
+ 124              	.LBE24:
+ 125              		.loc 1 40 5 view .LVU25
+ 126 001e 1648     		ldr	r0, .L10+12
+ 127              	.LVL6:
+ 128              		.loc 1 40 5 view .LVU26
+ 129              	.LBE36:
+  28:Core/Src/rtc.c **** 
+ 130              		.loc 1 28 36 view .LVU27
+ 131 0020 83B0     		sub	sp, sp, #12
+ 132              	.LCFI1:
+ 133              		.cfi_def_cfa_offset 24
+ 134              	.LBB37:
+ 135              	.LBB27:
+ 136              	.LBB26:
+ 137              		.loc 2 1267 10 view .LVU28
+ 138 0022 05F07F05 		and	r5, r5, #127
+ 139              	.LBE26:
+ 140              	.LBE27:
+ 141              		.loc 1 40 5 view .LVU29
+ 142 0026 C2F30542 		ubfx	r2, r2, #16, #6
+ 143 002a C3F30623 		ubfx	r3, r3, #8, #7
+ 144 002e 0095     		str	r5, [sp]
+ 145 0030 FFF7FEFF 		bl	sprintf
+ 146              	.LVL7:
+  41:Core/Src/rtc.c ****     sprintf(dateStr, "%2ld/%02ld/%4ld", LL_RTC_DATE_GetDay(RTC), LL_RTC_DATE_GetMonth(RTC), (LL_RTC
+ 147              		.loc 1 41 5 is_stmt 1 view .LVU30
+ 148              	.LBB28:
+ 149              	.LBI28:
+1268:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1269:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1270:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1271:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set time (hour, minute and second) in BCD format
+1272:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1273:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   It can be written in initialization mode only (@ref LL_RTC_EnableInitMode function)
+1274:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note TimeFormat and Hours should follow the same format
+1275:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           PM            LL_RTC_TIME_Config\n
+1276:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           HT            LL_RTC_TIME_Config\n
+1277:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           HU            LL_RTC_TIME_Config\n
+1278:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           MNT           LL_RTC_TIME_Config\n
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 27
+
+
+1279:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           MNU           LL_RTC_TIME_Config\n
+1280:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           ST            LL_RTC_TIME_Config\n
+1281:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           SU            LL_RTC_TIME_Config
+1282:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1283:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Format12_24 This parameter can be one of the following values:
+1284:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_TIME_FORMAT_AM_OR_24
+1285:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_TIME_FORMAT_PM
+1286:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Hours Value between Min_Data=0x01 and Max_Data=0x12 or between Min_Data=0x00 and Max_Da
+1287:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Minutes Value between Min_Data=0x00 and Max_Data=0x59
+1288:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Seconds Value between Min_Data=0x00 and Max_Data=0x59
+1289:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1290:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1291:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_Config(RTC_TypeDef *RTCx, uint32_t Format12_24, uint32_t Hours, ui
+1292:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1293:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   register uint32_t temp = 0U;
+1294:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1295:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   temp = Format12_24                                                                               
+1296:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****          (((Hours & 0xF0U) << (RTC_TR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_TR_HU_Pos))     | \
+1297:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****          (((Minutes & 0xF0U) << (RTC_TR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_TR_MNU_Pos)) | \
+1298:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****          (((Seconds & 0xF0U) << (RTC_TR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_TR_SU_Pos));
+1299:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->TR, (RTC_TR_PM | RTC_TR_HT | RTC_TR_HU | RTC_TR_MNT | RTC_TR_MNU | RTC_TR_ST | R
+1300:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1301:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1302:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1303:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get time (hour, minute and second) in BCD format
+1304:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1305:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1306:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note Read either RTC_SSR or RTC_TR locks the values in the higher-order calendar
+1307:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       shadow registers until RTC_DR is read (LL_RTC_ReadReg(RTC, DR)).
+1308:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macros __LL_RTC_GET_HOUR, __LL_RTC_GET_MINUTE and __LL_RTC_GET_SECOND
+1309:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       are available to get independently each parameter.
+1310:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll TR           HT            LL_RTC_TIME_Get\n
+1311:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           HU            LL_RTC_TIME_Get\n
+1312:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           MNT           LL_RTC_TIME_Get\n
+1313:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           MNU           LL_RTC_TIME_Get\n
+1314:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           ST            LL_RTC_TIME_Get\n
+1315:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         TR           SU            LL_RTC_TIME_Get
+1316:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1317:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Combination of hours, minutes and seconds (Format: 0x00HHMMSS).
+1318:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1319:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_TIME_Get(RTC_TypeDef *RTCx)
+1320:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1321:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   register uint32_t temp = 0U;
+1322:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   
+1323:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   temp = READ_BIT(RTCx->TR, (RTC_TR_HT | RTC_TR_HU | RTC_TR_MNT | RTC_TR_MNU | RTC_TR_ST | RTC_TR_S
+1324:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)((((((temp & RTC_TR_HT) >> RTC_TR_HT_Pos) << 4U) | ((temp & RTC_TR_HU) >> RTC_TR
+1325:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                     (((((temp & RTC_TR_MNT) >> RTC_TR_MNT_Pos) << 4U) | ((temp & RTC_TR_MNU) >> RTC
+1326:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****                     ((((temp & RTC_TR_ST) >> RTC_TR_ST_Pos) << 4U) | ((temp & RTC_TR_SU) >> RTC_TR_
+1327:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1328:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1329:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1330:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Memorize whether the daylight saving time change has been performed
+1331:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1332:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           BKP           LL_RTC_TIME_EnableDayLightStore
+1333:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1334:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1335:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 28
+
+
+1336:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_EnableDayLightStore(RTC_TypeDef *RTCx)
+1337:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1338:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   SET_BIT(RTCx->CR, RTC_CR_BKP);
+1339:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1340:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1341:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1342:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Disable memorization whether the daylight saving time change has been performed.
+1343:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1344:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           BKP           LL_RTC_TIME_DisableDayLightStore
+1345:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1346:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1347:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1348:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_DisableDayLightStore(RTC_TypeDef *RTCx)
+1349:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1350:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   CLEAR_BIT(RTCx->CR, RTC_CR_BKP);
+1351:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1352:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1353:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1354:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Check if RTC Day Light Saving stored operation has been enabled or not
+1355:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           BKP           LL_RTC_TIME_IsDayLightStoreEnabled
+1356:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1357:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval State of bit (1 or 0).
+1358:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1359:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_TIME_IsDayLightStoreEnabled(RTC_TypeDef *RTCx)
+1360:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1361:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (READ_BIT(RTCx->CR, RTC_CR_BKP) == (RTC_CR_BKP));
+1362:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1363:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1364:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1365:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Subtract 1 hour (winter time change)
+1366:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1367:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           SUB1H         LL_RTC_TIME_DecHour
+1368:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1369:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1370:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1371:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_DecHour(RTC_TypeDef *RTCx)
+1372:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1373:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   SET_BIT(RTCx->CR, RTC_CR_SUB1H);
+1374:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1375:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1376:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1377:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Add 1 hour (summer time change)
+1378:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1379:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll CR           ADD1H         LL_RTC_TIME_IncHour
+1380:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1381:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1382:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1383:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_IncHour(RTC_TypeDef *RTCx)
+1384:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1385:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   SET_BIT(RTCx->CR, RTC_CR_ADD1H);
+1386:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1387:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1388:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1389:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Sub second value in the synchronous prescaler counter.
+1390:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note  You can use both SubSeconds value and SecondFraction (PREDIV_S through
+1391:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *        LL_RTC_GetSynchPrescaler function) terms returned to convert Calendar
+1392:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *        SubSeconds value in second fraction ratio with time unit following
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 29
+
+
+1393:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *        generic formula:
+1394:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *          ==> Seconds fraction ratio * time_unit= [(SecondFraction-SubSeconds)/(SecondFraction+1
+1395:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *        This conversion can be performed only if no shift operation is pending
+1396:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *        (ie. SHFP=0) when PREDIV_S >= SS.
+1397:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll SSR          SS            LL_RTC_TIME_GetSubSecond
+1398:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1399:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Sub second value (number between 0 and 65535)
+1400:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1401:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_TIME_GetSubSecond(RTC_TypeDef *RTCx)
+1402:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1403:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->SSR, RTC_SSR_SS));
+1404:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1405:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1406:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1407:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Synchronize to a remote clock with a high degree of precision.
+1408:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   This operation effectively subtracts from (delays) or advance the clock of a fraction o
+1409:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   Bit is write-protected. @ref LL_RTC_DisableWriteProtection function should be called be
+1410:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note   When REFCKON is set, firmware must not write to Shift control register.
+1411:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll SHIFTR       ADD1S         LL_RTC_TIME_Synchronize\n
+1412:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         SHIFTR       SUBFS         LL_RTC_TIME_Synchronize
+1413:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1414:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  ShiftSecond This parameter can be one of the following values:
+1415:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_SHIFT_SECOND_DELAY
+1416:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_SHIFT_SECOND_ADVANCE
+1417:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Fraction Number of Seconds Fractions (any value from 0 to 0x7FFF)
+1418:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1419:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1420:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_TIME_Synchronize(RTC_TypeDef *RTCx, uint32_t ShiftSecond, uint32_t Frac
+1421:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1422:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   WRITE_REG(RTCx->SHIFTR, ShiftSecond | Fraction);
+1423:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1424:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1425:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1426:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @}
+1427:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1428:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1429:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /** @defgroup RTC_LL_EF_Date Date
+1430:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @{
+1431:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1432:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1433:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1434:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Year in BCD format
+1435:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BIN2BCD is available to convert Year from binary to BCD for
+1436:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           YT            LL_RTC_DATE_SetYear\n
+1437:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         DR           YU            LL_RTC_DATE_SetYear
+1438:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1439:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Year Value between Min_Data=0x00 and Max_Data=0x99
+1440:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1441:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1442:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DATE_SetYear(RTC_TypeDef *RTCx, uint32_t Year)
+1443:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1444:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->DR, (RTC_DR_YT | RTC_DR_YU),
+1445:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****              (((Year & 0xF0U) << (RTC_DR_YT_Pos - 4U)) | ((Year & 0x0FU) << RTC_DR_YU_Pos)));
+1446:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1447:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1448:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1449:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Year in BCD format
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 30
+
+
+1450:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1451:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1452:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BCD2BIN is available to convert Year from BCD to Binary for
+1453:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           YT            LL_RTC_DATE_GetYear\n
+1454:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         DR           YU            LL_RTC_DATE_GetYear
+1455:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1456:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Value between Min_Data=0x00 and Max_Data=0x99
+1457:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1458:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_DATE_GetYear(RTC_TypeDef *RTCx)
+1459:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1460:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_YT | RTC_DR_YU))) >> RTC_DR_YU_Pos);
+1461:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1462:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1463:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1464:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Week day
+1465:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           WDU           LL_RTC_DATE_SetWeekDay
+1466:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1467:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  WeekDay This parameter can be one of the following values:
+1468:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_MONDAY
+1469:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
+1470:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
+1471:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
+1472:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
+1473:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
+1474:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+1475:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1476:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1477:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DATE_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
+1478:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1479:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->DR, RTC_DR_WDU, WeekDay << RTC_DR_WDU_Pos);
+1480:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1481:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1482:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1483:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Week day
+1484:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1485:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1486:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           WDU           LL_RTC_DATE_GetWeekDay
+1487:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1488:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+1489:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_MONDAY
+1490:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_TUESDAY
+1491:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_WEDNESDAY
+1492:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_THURSDAY
+1493:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_FRIDAY
+1494:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
+1495:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
+1496:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1497:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_DATE_GetWeekDay(RTC_TypeDef *RTCx)
+1498:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1499:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)(READ_BIT(RTCx->DR, RTC_DR_WDU) >> RTC_DR_WDU_Pos);
+1500:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1501:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1502:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1503:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Month in BCD format
+1504:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BIN2BCD is available to convert Month from binary to BCD fo
+1505:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           MT            LL_RTC_DATE_SetMonth\n
+1506:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         DR           MU            LL_RTC_DATE_SetMonth
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 31
+
+
+1507:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1508:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Month This parameter can be one of the following values:
+1509:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JANUARY
+1510:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_FEBRUARY
+1511:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_MARCH
+1512:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_APRIL
+1513:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_MAY
+1514:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JUNE
+1515:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JULY
+1516:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_AUGUST
+1517:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_SEPTEMBER
+1518:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_OCTOBER
+1519:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_NOVEMBER
+1520:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_DECEMBER
+1521:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+1522:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1523:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DATE_SetMonth(RTC_TypeDef *RTCx, uint32_t Month)
+1524:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1525:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->DR, (RTC_DR_MT | RTC_DR_MU),
+1526:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****              (((Month & 0xF0U) << (RTC_DR_MT_Pos - 4U)) | ((Month & 0x0FU) << RTC_DR_MU_Pos)));
+1527:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1528:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1529:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1530:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Month in BCD format
+1531:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1532:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1533:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BCD2BIN is available to convert Month from BCD to Binary fo
+1534:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           MT            LL_RTC_DATE_GetMonth\n
+1535:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         DR           MU            LL_RTC_DATE_GetMonth
+1536:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1537:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Returned value can be one of the following values:
+1538:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JANUARY
+1539:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_FEBRUARY
+1540:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_MARCH
+1541:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_APRIL
+1542:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_MAY
+1543:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JUNE
+1544:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_JULY
+1545:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_AUGUST
+1546:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_SEPTEMBER
+1547:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_OCTOBER
+1548:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_NOVEMBER
+1549:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         @arg @ref LL_RTC_MONTH_DECEMBER
+1550:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1551:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_DATE_GetMonth(RTC_TypeDef *RTCx)
+1552:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1553:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_MT | RTC_DR_MU)))>> RTC_DR_MU_Pos);
+1554:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1555:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1556:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1557:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Set Day in BCD format
+1558:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BIN2BCD is available to convert Day from binary to BCD form
+1559:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           DT            LL_RTC_DATE_SetDay\n
+1560:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         DR           DU            LL_RTC_DATE_SetDay
+1561:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1562:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  Day Value between Min_Data=0x01 and Max_Data=0x31
+1563:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval None
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 32
+
+
+1564:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1565:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE void LL_RTC_DATE_SetDay(RTC_TypeDef *RTCx, uint32_t Day)
+1566:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1567:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   MODIFY_REG(RTCx->DR, (RTC_DR_DT | RTC_DR_DU),
+1568:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****              (((Day & 0xF0U) << (RTC_DR_DT_Pos - 4U)) | ((Day & 0x0FU) << RTC_DR_DU_Pos)));
+1569:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+1570:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** 
+1571:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** /**
+1572:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @brief  Get Day in BCD format
+1573:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note if shadow mode is disabled (BYPSHAD=0), need to check if RSF flag is set
+1574:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *       before reading this bit
+1575:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @note helper macro __LL_RTC_CONVERT_BCD2BIN is available to convert Day from BCD to Binary form
+1576:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @rmtoll DR           DT            LL_RTC_DATE_GetDay\n
+1577:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   *         DR           DU            LL_RTC_DATE_GetDay
+1578:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @param  RTCx RTC Instance
+1579:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   * @retval Value between Min_Data=0x01 and Max_Data=0x31
+1580:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   */
+1581:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** __STATIC_INLINE uint32_t LL_RTC_DATE_GetDay(RTC_TypeDef *RTCx)
+ 150              		.loc 2 1581 26 view .LVU31
+ 151              	.LBB29:
+1582:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+1583:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h ****   return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_DT | RTC_DR_DU))) >> RTC_DR_DU_Pos);
+ 152              		.loc 2 1583 3 view .LVU32
+ 153              		.loc 2 1583 22 is_stmt 0 view .LVU33
+ 154 0034 6268     		ldr	r2, [r4, #4]
+ 155              	.LVL8:
+ 156              		.loc 2 1583 22 view .LVU34
+ 157              	.LBE29:
+ 158              	.LBE28:
+ 159              	.LBB30:
+ 160              	.LBI30:
+1551:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 161              		.loc 2 1551 26 is_stmt 1 view .LVU35
+ 162              	.LBB31:
+1553:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 163              		.loc 2 1553 3 view .LVU36
+1553:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 164              		.loc 2 1553 22 is_stmt 0 view .LVU37
+ 165 0036 6368     		ldr	r3, [r4, #4]
+ 166              	.LVL9:
+1553:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 167              		.loc 2 1553 22 view .LVU38
+ 168              	.LBE31:
+ 169              	.LBE30:
+ 170              	.LBB32:
+ 171              	.LBI32:
+1458:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** {
+ 172              		.loc 2 1458 26 is_stmt 1 view .LVU39
+ 173              	.LBB33:
+1460:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 174              		.loc 2 1460 3 view .LVU40
+1460:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 175              		.loc 2 1460 22 is_stmt 0 view .LVU41
+ 176 0038 6468     		ldr	r4, [r4, #4]
+ 177              	.LVL10:
+1460:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 178              		.loc 2 1460 22 view .LVU42
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 33
+
+
+ 179              	.LBE33:
+ 180              	.LBE32:
+ 181              		.loc 1 41 5 view .LVU43
+ 182 003a 1049     		ldr	r1, .L10+16
+ 183 003c 1048     		ldr	r0, .L10+20
+ 184              	.LBB35:
+ 185              	.LBB34:
+1460:Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rtc.h **** }
+ 186              		.loc 2 1460 10 view .LVU44
+ 187 003e C4F30744 		ubfx	r4, r4, #16, #8
+ 188              	.LBE34:
+ 189              	.LBE35:
+ 190              		.loc 1 41 5 view .LVU45
+ 191 0042 04F26C74 		addw	r4, r4, #1900
+ 192 0046 02F03F02 		and	r2, r2, #63
+ 193 004a C3F30423 		ubfx	r3, r3, #8, #5
+ 194 004e 0094     		str	r4, [sp]
+ 195 0050 FFF7FEFF 		bl	sprintf
+ 196              	.LVL11:
+  42:Core/Src/rtc.c ****     printf("date: %s\n\r", dateStr);
+ 197              		.loc 1 42 5 is_stmt 1 view .LVU46
+ 198 0054 0A49     		ldr	r1, .L10+20
+ 199 0056 0B48     		ldr	r0, .L10+24
+ 200 0058 FFF7FEFF 		bl	printf
+ 201              	.LVL12:
+  43:Core/Src/rtc.c ****     printf("time: %s\n\r", timeStr);
+ 202              		.loc 1 43 5 view .LVU47
+ 203 005c 0649     		ldr	r1, .L10+12
+ 204 005e 0A48     		ldr	r0, .L10+28
+ 205              	.LBE37:
+  44:Core/Src/rtc.c ****   }
+  45:Core/Src/rtc.c **** }
+ 206              		.loc 1 45 1 is_stmt 0 view .LVU48
+ 207 0060 03B0     		add	sp, sp, #12
+ 208              	.LCFI2:
+ 209              		.cfi_def_cfa_offset 12
+ 210              		@ sp needed
+ 211 0062 BDE83040 		pop	{r4, r5, lr}
+ 212              	.LCFI3:
+ 213              		.cfi_restore 14
+ 214              		.cfi_restore 5
+ 215              		.cfi_restore 4
+ 216              		.cfi_def_cfa_offset 0
+ 217              	.LBB38:
+  43:Core/Src/rtc.c ****     printf("time: %s\n\r", timeStr);
+ 218              		.loc 1 43 5 view .LVU49
+ 219 0066 FFF7FEBF 		b	printf
+ 220              	.LVL13:
+ 221              	.L11:
+ 222 006a 00BF     		.align	2
+ 223              	.L10:
+ 224 006c 00180240 		.word	1073879040
+ 225 0070 00280040 		.word	1073752064
+ 226 0074 00000000 		.word	.LC0
+ 227 0078 00000000 		.word	.LANCHOR0
+ 228 007c 14000000 		.word	.LC1
+ 229 0080 00000000 		.word	.LANCHOR1
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 34
+
+
+ 230 0084 24000000 		.word	.LC2
+ 231 0088 30000000 		.word	.LC3
+ 232              	.LBE38:
+ 233              		.cfi_endproc
+ 234              	.LFE1338:
+ 236              		.section	.text.RTC_WakeUp_Handler,"ax",%progbits
+ 237              		.align	1
+ 238              		.p2align 2,,3
+ 239              		.global	RTC_WakeUp_Handler
+ 240              		.syntax unified
+ 241              		.thumb
+ 242              		.thumb_func
+ 243              		.fpu fpv4-sp-d16
+ 245              	RTC_WakeUp_Handler:
+ 246              	.LFB1339:
+  46:Core/Src/rtc.c **** 
+  47:Core/Src/rtc.c **** 
+  48:Core/Src/rtc.c **** 
+  49:Core/Src/rtc.c **** /*
+  50:Core/Src/rtc.c ****  * RTC WakeUp Handler called from interrupt via flags
+  51:Core/Src/rtc.c ****  */
+  52:Core/Src/rtc.c **** void RTC_WakeUp_Handler(void) {
+ 247              		.loc 1 52 31 is_stmt 1 view -0
+ 248              		.cfi_startproc
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251              		@ link register save eliminated.
+  53:Core/Src/rtc.c ****   //
+  54:Core/Src/rtc.c **** }
+ 252              		.loc 1 54 1 view .LVU51
+ 253 0000 7047     		bx	lr
+ 254              		.cfi_endproc
+ 255              	.LFE1339:
+ 257 0002 00BF     		.section	.text.SetRTCAlarm,"ax",%progbits
+ 258              		.align	1
+ 259              		.p2align 2,,3
+ 260              		.global	SetRTCAlarm
+ 261              		.syntax unified
+ 262              		.thumb
+ 263              		.thumb_func
+ 264              		.fpu fpv4-sp-d16
+ 266              	SetRTCAlarm:
+ 267              	.LVL14:
+ 268              	.LFB1340:
+  55:Core/Src/rtc.c **** 
+  56:Core/Src/rtc.c **** 
+  57:Core/Src/rtc.c **** 
+  58:Core/Src/rtc.c **** /*
+  59:Core/Src/rtc.c ****  * RTC WakeUp Handler called from interrupt via flags
+  60:Core/Src/rtc.c ****  */
+  61:Core/Src/rtc.c **** void SetRTCAlarm(uint32_t alarmVal) {
+ 269              		.loc 1 61 37 view -0
+ 270              		.cfi_startproc
+ 271              		@ args = 0, pretend = 0, frame = 0
+ 272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 273              		@ link register save eliminated.
+  62:Core/Src/rtc.c ****   //
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 35
+
+
+  63:Core/Src/rtc.c **** }
+ 274              		.loc 1 63 1 view .LVU53
+ 275 0000 7047     		bx	lr
+ 276              		.cfi_endproc
+ 277              	.LFE1340:
+ 279 0002 00BF     		.section	.bss.dateStr.13787,"aw",%nobits
+ 280              		.align	2
+ 281              		.set	.LANCHOR1,. + 0
+ 284              	dateStr.13787:
+ 285 0000 00000000 		.space	11
+ 285      00000000 
+ 285      000000
+ 286              		.section	.bss.timeStr.13788,"aw",%nobits
+ 287              		.align	2
+ 288              		.set	.LANCHOR0,. + 0
+ 291              	timeStr.13788:
+ 292 0000 00000000 		.space	11
+ 292      00000000 
+ 292      000000
+ 293              		.text
+ 294              	.Letext0:
+ 295              		.file 3 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 296              		.file 4 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\lock.h"
+ 297              		.file 5 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\_types.h"
+ 298              		.file 6 "c:\\vsarm\\arm-gcc\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 299              		.file 7 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\reent.h"
+ 300              		.file 8 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 301              		.file 9 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\stdlib.h"
+ 302              		.file 10 "Drivers/CMSIS/Include/core_cm4.h"
+ 303              		.file 11 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 304              		.file 12 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 305              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 306              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_rcc.h"
+ 307              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_dma.h"
+ 308              		.file 16 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_tim.h"
+ 309              		.file 17 "Core/Inc/common.h"
+ 310              		.file 18 "Core/Inc/main.h"
+ 311              		.file 19 "c:\\vsarm\\arm-gcc\\arm-none-eabi\\include\\stdio.h"
+ARM GAS  C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s 			page 36
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 rtc.c
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:18     .rodata.RTC_Alarm_Handler.str1.4:00000000 $d
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:31     .text.RTC_Alarm_Handler:00000000 $t
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:40     .text.RTC_Alarm_Handler:00000000 RTC_Alarm_Handler
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:224    .text.RTC_Alarm_Handler:0000006c $d
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:237    .text.RTC_WakeUp_Handler:00000000 $t
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:245    .text.RTC_WakeUp_Handler:00000000 RTC_WakeUp_Handler
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:258    .text.SetRTCAlarm:00000000 $t
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:266    .text.SetRTCAlarm:00000000 SetRTCAlarm
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:280    .bss.dateStr.13787:00000000 $d
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:284    .bss.dateStr.13787:00000000 dateStr.13787
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:287    .bss.timeStr.13788:00000000 $d
+C:\Users\zoosman\AppData\Local\Temp\ccOy9fg9.s:291    .bss.timeStr.13788:00000000 timeStr.13788
+
+UNDEFINED SYMBOLS
+LED_Blink
+sprintf
+printf
