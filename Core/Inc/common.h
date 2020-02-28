@@ -31,14 +31,14 @@ struct __FILE {
 #define SET_PERIPH_BB_VAL(addr, periphOffset, wordOffset, key)  Set_BitBandVal((GET_PERIPH_BB_ADDR(addr, periphOffset, wordOffset)), key)
 #define GET_PERIPH_BB_VAL(addr, periphOffset, wordOffset)       (Get_BitBandVal((GET_PERIPH_BB_ADDR(addr, periphOffset, wordOffset))))
 
-#define GET_SRAM_BB_ADDR(addr, periphOffset, wordOffset)        (SRAM_BB_BASE + ((addr + periphOffset) * 32U) + (wordOffset * 4U))
-#define SET_SRAM_BB_VAL(addr, periphOffset, wordOffset, key)    Set_BitBandVal((GET_SRAM_BB_ADDR(addr, periphOffset, wordOffset)), key)
-#define GET_SRAM_BB_VAL(addr, periphOffset, wordOffset)         (Get_BitBandVal((GET_SRAM_BB_ADDR(addr, periphOffset, wordOffset))))
+#define GET_SRAM_BB_ADDR(addr, offset)                          (SRAM_BB_BASE + (addr * 32U) + (offset * 4U))
+#define SET_SRAM_BB_VAL(addr, offset, key)                      Set_BitBandVal((GET_SRAM_BB_ADDR(addr, offset)), key)
+#define GET_SRAM_BB_VAL(addr, offset)                           (Get_BitBandVal((GET_SRAM_BB_ADDR(addr, offset))))
 
 /* Exported macro ------------------------------------------------------------*/
-#define FLAG_SET(registry, flag)        SET_SRAM_BB_VAL((uint32_t)&registry, 0, flag, 1)
-#define FLAG_CLR(registry, flag)        SET_SRAM_BB_VAL((uint32_t)&registry, 0, flag, 0)
-#define FLAG_CHECK(registry, flag)      (GET_SRAM_BB_VAL((uint32_t)&registry, 0, flag))
+#define FLAG_SET(registry, flag)        SET_SRAM_BB_VAL((uint32_t)&registry, flag, 1)
+#define FLAG_CLR(registry, flag)        SET_SRAM_BB_VAL((uint32_t)&registry, flag, 0)
+#define FLAG_CHECK(registry, flag)      (GET_SRAM_BB_VAL((uint32_t)&registry, flag))
 
 #define PIN_H(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR, pinSource, 1)
 #define PIN_L(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR, pinSource, 0)
