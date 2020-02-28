@@ -24,6 +24,8 @@ static uint32_t seconds_tmp   = 1000;
 static uint32_t minutes_tmp   = 60;
 
 static uint32_t dess = 0;
+static uint32_t dess2 = 0;
+static uint32_t dess3 = 0;
 
 
 
@@ -69,32 +71,32 @@ int main(void) {
 /********************************************************************************/
 /*                                     CRON                                     */
 /********************************************************************************/
-void Cron_Handler(){
+void Cron_Handler() {
   $CronStart:
-  if (SysTick->CTRL & (1 << SysTick_CTRL_COUNTFLAG_Pos)){ 
+  if (SysTick->CTRL & (1 << SysTick_CTRL_COUNTFLAG_Pos)) { 
     sysQuantum++;
     CronSysQuantum_Handler();
   }
 
-  if (sysQuantum >= millis_tmp){
+  if (sysQuantum >= millis_tmp) {
     millis++;
     millis_tmp = sysQuantum + 100;
     CronMillis_Handler();
   }
   
-  if (millis >= seconds_tmp){
+  if (millis >= seconds_tmp) {
     seconds++;
     seconds_tmp += 1000;
     CronSeconds_Handler();
   }
   
-  if (seconds >= minutes_tmp){
+  if (seconds >= minutes_tmp) {
     minutes++;
     minutes_tmp += 60;
     CronMinutes_Handler();
   }
 
-  while (sysQuantum < delay_tmp){
+  while (sysQuantum < delay_tmp) {
     goto $CronStart;
   }
   // !!!!!!!!! The bug!!!!!!!!
@@ -108,18 +110,19 @@ void Cron_Handler(){
 /*                             CRON EVENTS HANDLERS                             */
 /********************************************************************************/
 // ---- System Quantum ---- //
-static void CronSysQuantum_Handler(void){
+static void CronSysQuantum_Handler(void) {
   //
 }
 
 // ---- Milliseconds ---- //
-static void CronMillis_Handler(void){
+static void CronMillis_Handler(void) {
   //
   dess++;
+  dess3 +=3;
 }
 
 // ---- Seconds ---- //
-static void CronSeconds_Handler(void){
+static void CronSeconds_Handler(void) {
   //
   LL_IWDG_ReloadCounter(IWDG);
   LED_Blink(GPIOG, GPIO_BSRR_BS13_Pos);
@@ -127,7 +130,7 @@ static void CronSeconds_Handler(void){
 }
 
 // ---- Minutes ---- //
-static void CronMinutes_Handler(void){
+static void CronMinutes_Handler(void) {
   //
 }
 
@@ -224,12 +227,12 @@ static void SetupHardware(void) {
   LL_RCC_HSE_Enable();
 
    /* Wait till HSE is ready */
-  while(LL_RCC_HSE_IsReady() != 1);
+  while(!(LL_RCC_HSE_IsReady()));
 
   LL_RCC_LSI_Enable();
 
    /* Wait till LSI is ready */
-  while(LL_RCC_LSI_IsReady() != 1);
+  while(!(LL_RCC_LSI_IsReady()));
 
   LL_PWR_EnableBkUpAccess();
   LL_RCC_ForceBackupDomainReset();
@@ -240,7 +243,7 @@ static void SetupHardware(void) {
   LL_RCC_PLL_Enable();
 
    /* Wait till PLL is ready */
-  while(LL_RCC_PLL_IsReady() != 1);
+  while(!(LL_RCC_PLL_IsReady()));
 
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_4);
@@ -262,7 +265,7 @@ static void SetupHardware(void) {
   LL_IWDG_EnableWriteAccess(IWDG);
   LL_IWDG_SetPrescaler(IWDG, LL_IWDG_PRESCALER_128);
   LL_IWDG_SetReloadCounter(IWDG, 6625);
-  while (LL_IWDG_IsReady(IWDG) != 1);
+  while (!(LL_IWDG_IsReady(IWDG)));
 
   LL_IWDG_ReloadCounter(IWDG);
 
@@ -301,8 +304,8 @@ static void SetupHardware(void) {
 
 /************************************************************************************************/
 // GPIO LED
-  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-  LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
+  LL_GPIO_InitTypeDef GPIO_InitStruct   = {0};
+  LL_EXTI_InitTypeDef EXTI_InitStruct   = {0};
   
   GPIO_InitStruct.Pin                   = LL_GPIO_PIN_13 | LL_GPIO_PIN_14;
   GPIO_InitStruct.Mode                  = LL_GPIO_MODE_OUTPUT;
@@ -333,7 +336,7 @@ static void SetupHardware(void) {
 
 /************************************************************************************************/
 // SPI 5
-  LL_SPI_InitTypeDef SPI_InitStruct = {0};
+  LL_SPI_InitTypeDef SPI_InitStruct     = {0};
   /**SPI5 GPIO Configuration  
   PF7   ------> SPI5_SCK
   PF8   ------> SPI5_MISO
@@ -380,7 +383,7 @@ static void SetupHardware(void) {
 
 /************************************************************************************************/
 // I2C 3
-  LL_I2C_InitTypeDef I2C_InitStruct = {0};
+  LL_I2C_InitTypeDef I2C_InitStruct     = {0};
 
   /**I2C3 GPIO Configuration  
   PC9   ------> I2C3_SDA
