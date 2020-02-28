@@ -11,3 +11,5 @@ Microsoft Visual Studio Code with Cortex-Debug extension was used as an IDE as w
 
 In MacOs was taken Homebrew (https://brew.sh/) for packages installing.
 YandexDisk was taken as Cloud stogare for files syncronizstion.
+
+Thanks to Cristian Dobre for his article https://hbfsrobotics.com/blog/configuring-vs-code-arm-development-stm32cubemx
