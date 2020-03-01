@@ -57,6 +57,7 @@ extern "C" {
 #include "common.h"
 #include "tim.h"
 #include "rtc.h"
+#include "sdram.h"
 
 
 /* Exported types ------------------------------------------------------------*/
@@ -72,6 +73,7 @@ extern uint32_t _EREG_;
 
 /* Exported functions prototypes ---------------------------------------------*/
 extern void Delay_Handler(uint32_t delay);
+extern void Delay(uint32_t delay);
 extern void Cron_Handler(void);
 extern void Set_BitBandVal(uint32_t addr, uint32_t key);
 extern uint32_t Get_BitBandVal(uint32_t addr);

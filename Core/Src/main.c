@@ -23,11 +23,6 @@ static uint32_t millis_tmp    = 100;
 static uint32_t seconds_tmp   = 1000;
 static uint32_t minutes_tmp   = 60;
 
-static uint32_t dess = 0;
-static uint32_t dess2 = 0;
-static uint32_t dess3 = 0;
-
-
 
 /* -------------------------------------------------------------------------- */
 /* Private function prototypes -----------------------------------------------*/
@@ -117,8 +112,6 @@ static void CronSysQuantum_Handler(void) {
 // ---- Milliseconds ---- //
 static void CronMillis_Handler(void) {
   //
-  dess++;
-  dess3 +=3;
 }
 
 // ---- Seconds ---- //
@@ -126,7 +119,35 @@ static void CronSeconds_Handler(void) {
   //
   LL_IWDG_ReloadCounter(IWDG);
   LED_Blink(GPIOG, GPIO_BSRR_BS13_Pos);
-  // printf("Helllo!\n");
+
+  // uint32_t bb = 3123456789;
+  // SDRAM_Write32b(0, bb);
+  // uint32_t dd = SDRAM_Read32b(0);
+
+  // printf("%lu\n\r", dd);
+
+  // uint32_t iin[10] = {
+  //   0x00000001,
+  //   0x00000002,
+  //   0x00000003,
+  //   0x00000004,
+  //   0x00000005,
+  //   0x000a0001,
+  //   0x000b0001,
+  //   0x000c0001,
+  //   0x000d0001,
+  //   0x000e0001
+  // };
+  // SDRAM_WriteBuffer(0, 10, iin);
+
+
+  // uint32_t wee[20];
+  // SDRAM_ReadBuffer(0, 10, wee);
+
+  // for (uint8_t i = 0; i < 10; i++) {
+  //   printf("%lx\n\r", wee[i]);
+  // }
+
 }
 
 // ---- Minutes ---- //
@@ -219,7 +240,7 @@ static void SetupHardware(void) {
   /* System Clock Configuration */
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_5);
 
-  if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_5) {
+  if (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_5) {
     Error_Handler();
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
@@ -227,12 +248,12 @@ static void SetupHardware(void) {
   LL_RCC_HSE_Enable();
 
    /* Wait till HSE is ready */
-  while(!(LL_RCC_HSE_IsReady()));
+  while (!(LL_RCC_HSE_IsReady()));
 
   LL_RCC_LSI_Enable();
 
    /* Wait till LSI is ready */
-  while(!(LL_RCC_LSI_IsReady()));
+  while (!(LL_RCC_LSI_IsReady()));
 
   LL_PWR_EnableBkUpAccess();
   LL_RCC_ForceBackupDomainReset();
@@ -243,7 +264,7 @@ static void SetupHardware(void) {
   LL_RCC_PLL_Enable();
 
    /* Wait till PLL is ready */
-  while(!(LL_RCC_PLL_IsReady()));
+  while (!(LL_RCC_PLL_IsReady()));
 
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_4);
@@ -251,7 +272,7 @@ static void SetupHardware(void) {
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 
    /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL);
+  while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL);
   
   LL_SetSystemCoreClock(180000000);
   LL_RCC_SetTIMPrescaler(LL_RCC_TIM_PRESCALER_TWICE);
@@ -299,6 +320,10 @@ static void SetupHardware(void) {
     | LL_APB2_GRP1_PERIPH_USART1
   );
 
+  LL_AHB3_GRP1_EnableClock(
+    LL_AHB3_GRP1_PERIPH_FMC
+  );
+  while (!(GET_PERIPH_BB_VAL((uint32_t)RCC, RCC_AHB3_Offset, RCC_AHB3ENR_FMCEN_Pos)));
 
 
 
@@ -568,48 +593,147 @@ static void SetupHardware(void) {
   EXTI_InitStruct.LineCommand             = ENABLE;
   LL_EXTI_Init(&EXTI_InitStruct);
 
+
+/************************************************************************************************/
+// FMC
+  FMC_SDRAM_InitTypeDef Sdram_InitStruct  = {0};
+  FMC_SDRAM_TimingTypeDef SdramTiming     = {0};
+
+  /** FMC GPIO Configuration  
+  PF0   ------> FMC_A0
+  PF1   ------> FMC_A1
+  PF2   ------> FMC_A2
+  PF3   ------> FMC_A3
+  PF4   ------> FMC_A4
+  PF5   ------> FMC_A5
+  PC0   ------> FMC_SDNWE
+  PF11  ------> FMC_SDNRAS
+  PF12  ------> FMC_A6
+  PF13  ------> FMC_A7
+  PF14  ------> FMC_A8
+  PF15  ------> FMC_A9
+  PG0   ------> FMC_A10
+  PG1   ------> FMC_A11
+  PE7   ------> FMC_D4
+  PE8   ------> FMC_D5
+  PE9   ------> FMC_D6
+  PE10  ------> FMC_D7
+  PE11  ------> FMC_D8
+  PE12  ------> FMC_D9
+  PE13  ------> FMC_D10
+  PE14  ------> FMC_D11
+  PE15  ------> FMC_D12
+  PD8   ------> FMC_D13
+  PD9   ------> FMC_D14
+  PD10  ------> FMC_D15
+  PD14  ------> FMC_D0
+  PD15  ------> FMC_D1
+  PG4   ------> FMC_BA0
+  PG5   ------> FMC_BA1
+  PG8   ------> FMC_SDCLK
+  PD0   ------> FMC_D2
+  PD1   ------> FMC_D3
+  PG15  ------> FMC_SDNCAS
+  PB5   ------> FMC_SDCKE1
+  PB6   ------> FMC_SDNE1
+  PE0   ------> FMC_NBL0
+  PE1   ------> FMC_NBL1
+  */
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | LL_GPIO_PIN_3 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
+  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
+  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
+  LL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                     = LL_GPIO_PIN_0;
+  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
+  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_8 | LL_GPIO_PIN_15;
+  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
+  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
+  LL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_7 | LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15 | LL_GPIO_PIN_0 | LL_GPIO_PIN_1;
+  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
+  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
+  LL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15 | LL_GPIO_PIN_0 | LL_GPIO_PIN_1;
+  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
+  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
+  LL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                     = LL_GPIO_PIN_5 | LL_GPIO_PIN_6;
+  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
+  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  Sdram_InitStruct.SDBank                 = FMC_SDRAM_BANK2;
+  Sdram_InitStruct.ColumnBitsNumber       = FMC_SDRAM_COLUMN_BITS_NUM_8;
+  Sdram_InitStruct.RowBitsNumber          = FMC_SDRAM_ROW_BITS_NUM_12;
+  Sdram_InitStruct.MemoryDataWidth        = FMC_SDRAM_MEM_BUS_WIDTH_16;
+  Sdram_InitStruct.InternalBankNumber     = FMC_SDRAM_INTERN_BANKS_NUM_4;
+  Sdram_InitStruct.CASLatency             = FMC_SDRAM_CAS_LATENCY_3;
+  Sdram_InitStruct.WriteProtection        = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+  Sdram_InitStruct.SDClockPeriod          = FMC_SDRAM_CLOCK_PERIOD_2;
+  Sdram_InitStruct.ReadBurst              = FMC_SDRAM_RBURST_DISABLE;
+  Sdram_InitStruct.ReadPipeDelay          = FMC_SDRAM_RPIPE_DELAY_0;
+  SDRAM_Init(FMC_SDRAM_DEVICE, &Sdram_InitStruct);
+
+  SdramTiming.LoadToActiveDelay           = 2;
+  SdramTiming.ExitSelfRefreshDelay        = 7;
+  SdramTiming.SelfRefreshTime             = 4;
+  SdramTiming.RowCycleDelay               = 7;
+  SdramTiming.WriteRecoveryTime           = 2;
+  SdramTiming.RPDelay                     = 2;
+  SdramTiming.RCDDelay                    = 2;
+  SDRAM_Timing_Init(FMC_SDRAM_DEVICE, &SdramTiming, Sdram_InitStruct.SDBank);
+
+  FMC_SDRAM_CommandTypeDef SdramCommand_InitStruct  = {0};
+
+  SdramCommand_InitStruct.CommandMode               = FMC_SDRAM_CMD_CLK_ENABLE;
+  SdramCommand_InitStruct.CommandTarget             = FMC_SDRAM_CMD_TARGET_BANK2;
+  SdramCommand_InitStruct.AutoRefreshNumber         = 1;
+  SdramCommand_InitStruct.ModeRegisterDefinition    = 0;
+  SDRAM_SendCommand(FMC_SDRAM_DEVICE, &SdramCommand_InitStruct);
+  Delay(10);
+
+  SdramCommand_InitStruct.CommandMode               = FMC_SDRAM_CMD_PALL;
+  SDRAM_SendCommand(FMC_SDRAM_DEVICE, &SdramCommand_InitStruct);
+
+  SdramCommand_InitStruct.CommandMode               = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
+  SdramCommand_InitStruct.AutoRefreshNumber         = 4;
+  SDRAM_SendCommand(FMC_SDRAM_DEVICE, &SdramCommand_InitStruct);
+  SDRAM_SendCommand(FMC_SDRAM_DEVICE, &SdramCommand_InitStruct);
+
+  uint32_t tmpr = (uint32_t)(
+      SDRAM_MODEREG_BURST_LENGTH_2
+    | SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL
+    | SDRAM_MODEREG_CAS_LATENCY_3
+    | SDRAM_MODEREG_OPERATING_MODE_STANDARD
+    | SDRAM_MODEREG_WRITEBURST_MODE_SINGLE
+  );
+
+  SdramCommand_InitStruct.CommandMode               = FMC_SDRAM_CMD_LOAD_MODE;
+  SdramCommand_InitStruct.AutoRefreshNumber         = 1;
+  SdramCommand_InitStruct.ModeRegisterDefinition    = tmpr;
+  SDRAM_SendCommand(FMC_SDRAM_DEVICE, &SdramCommand_InitStruct);
+
+  SDRAM_ProgramRefreshRate(FMC_SDRAM_DEVICE, 683);
 }
-
-
-
-
-
-
-
-/* FMC initialization function */
-// static void MX_FMC_Init(void) {
-//   FMC_SDRAM_TimingTypeDef SdramTiming = {0};
-
-//   hsdram1.Instance = FMC_SDRAM_DEVICE;
-//   /* hsdram1.Init */
-//   hsdram1.Init.SDBank = FMC_SDRAM_BANK2;
-//   hsdram1.Init.ColumnBitsNumber = FMC_SDRAM_COLUMN_BITS_NUM_8;
-//   hsdram1.Init.RowBitsNumber = FMC_SDRAM_ROW_BITS_NUM_12;
-//   hsdram1.Init.MemoryDataWidth = FMC_SDRAM_MEM_BUS_WIDTH_16;
-//   hsdram1.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
-//   hsdram1.Init.CASLatency = FMC_SDRAM_CAS_LATENCY_1;
-//   hsdram1.Init.WriteProtection = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-//   hsdram1.Init.SDClockPeriod = FMC_SDRAM_CLOCK_DISABLE;
-//   hsdram1.Init.ReadBurst = FMC_SDRAM_RBURST_DISABLE;
-//   hsdram1.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_0;
-//   /* SdramTiming */
-//   SdramTiming.LoadToActiveDelay = 16;
-//   SdramTiming.ExitSelfRefreshDelay = 16;
-//   SdramTiming.SelfRefreshTime = 16;
-//   SdramTiming.RowCycleDelay = 16;
-//   SdramTiming.WriteRecoveryTime = 16;
-//   SdramTiming.RPDelay = 16;
-//   SdramTiming.RCDDelay = 16;
-
-//   if (HAL_SDRAM_Init(&hsdram1, &SdramTiming) != HAL_OK);
-// }
-
-
-
-
-
-
-
 
 
 

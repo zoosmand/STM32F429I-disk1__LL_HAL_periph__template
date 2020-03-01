@@ -41,6 +41,7 @@ Core/Src/common.c \
 Core/Src/stm32f4xx_it.c \
 Core/Src/tim.c \
 Core/Src/rtc.c \
+Core/Src/sdram.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_crc.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.c \

@@ -20,9 +20,11 @@ struct __FILE {
 };
 
 /* Private defines -----------------------------------------------------------*/
-#define GPIO_IDR      (uint16_t)0x0010
-#define GPIO_ODR      (uint16_t)0x0014
-#define GPIO_BSRR     (uint16_t)0x0018
+#define GPIO_IDR_Offset         (uint16_t)0x0010
+#define GPIO_ODR_Offset         (uint16_t)0x0014
+#define GPIO_BSRR_Offset        (uint16_t)0x0018
+
+#define RCC_AHB3_Offset         (uint16_t)0x0038
 
 
 
@@ -40,9 +42,9 @@ struct __FILE {
 #define FLAG_CLR(registry, flag)        SET_SRAM_BB_VAL((uint32_t)&registry, flag, 0)
 #define FLAG_CHECK(registry, flag)      (GET_SRAM_BB_VAL((uint32_t)&registry, flag))
 
-#define PIN_H(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR, pinSource, 1)
-#define PIN_L(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR, pinSource, 0)
-#define PIN_LEVEL(port, pinSource)      (GET_PERIPH_BB_VAL((uint32_t)port, GPIO_IDR, pinSource))
+#define PIN_H(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR_Offset, pinSource, 1)
+#define PIN_L(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR_Offset, pinSource, 0)
+#define PIN_LEVEL(port, pinSource)      (GET_PERIPH_BB_VAL((uint32_t)port, GPIO_IDR_Offset, pinSource))
 
 
 
