@@ -24,6 +24,7 @@ static uint32_t seconds_tmp   = 1000;
 static uint32_t minutes_tmp   = 60;
 
 
+
 /* -------------------------------------------------------------------------- */
 /* Private function prototypes -----------------------------------------------*/
 /* -------------------------------------------------------------------------- */
@@ -44,14 +45,13 @@ static void Flags_Handler(void);
 
 
 
-
+////////////////////////////////////////////////////////////////////////////////
 
 /**
   * @brief  The application entry point.
   * @retval int
   */
 int main(void) {
-
   SetupHardware();
 
   while (1) {
@@ -60,6 +60,9 @@ int main(void) {
     Flags_Handler();
   }
 }
+
+
+
 
 
 
@@ -101,6 +104,9 @@ void Cron_Handler() {
 
 
 
+
+
+
 /********************************************************************************/
 /*                             CRON EVENTS HANDLERS                             */
 /********************************************************************************/
@@ -119,41 +125,15 @@ static void CronSeconds_Handler(void) {
   //
   LL_IWDG_ReloadCounter(IWDG);
   LED_Blink(GPIOG, GPIO_BSRR_BS13_Pos);
-
-  // uint32_t bb = 3123456789;
-  // SDRAM_Write32b(0, bb);
-  // uint32_t dd = SDRAM_Read32b(0);
-
-  // printf("%lu\n\r", dd);
-
-  // uint32_t iin[10] = {
-  //   0x00000001,
-  //   0x00000002,
-  //   0x00000003,
-  //   0x00000004,
-  //   0x00000005,
-  //   0x000a0001,
-  //   0x000b0001,
-  //   0x000c0001,
-  //   0x000d0001,
-  //   0x000e0001
-  // };
-  // SDRAM_WriteBuffer(0, 10, iin);
-
-
-  // uint32_t wee[20];
-  // SDRAM_ReadBuffer(0, 10, wee);
-
-  // for (uint8_t i = 0; i < 10; i++) {
-  //   printf("%lx\n\r", wee[i]);
-  // }
-
 }
 
 // ---- Minutes ---- //
 static void CronMinutes_Handler(void) {
   //
 }
+
+
+
 
 
 
@@ -195,8 +175,13 @@ void Flags_Handler(void){
   if (FLAG_CHECK(_EREG_, _BLINKF_)) {
     FLAG_CLR(_EREG_, _BLINKF_);
   }
-}
 
+  if (FLAG_CHECK(_EREG_, _EWUPF_)) {
+    if (WakeUp_Handler()) {
+      FLAG_CLR(_EREG_, _EWUPF_);
+    }
+  }
+}
 
 
 
@@ -260,10 +245,11 @@ static void SetupHardware(void) {
   LL_RCC_ReleaseBackupDomainReset();
   LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
   LL_RCC_EnableRTC();
+
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_4, 180, LL_RCC_PLLP_DIV_2);
   LL_RCC_PLL_Enable();
 
-   /* Wait till PLL is ready */
+  /* Wait till PLL is ready */
   while (!(LL_RCC_PLL_IsReady()));
 
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
@@ -277,7 +263,12 @@ static void SetupHardware(void) {
   LL_SetSystemCoreClock(180000000);
   LL_RCC_SetTIMPrescaler(LL_RCC_TIM_PRESCALER_TWICE);
 
+  LL_RCC_PLLSAI_ConfigDomain_LTDC(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLSAIM_DIV_4, 60, LL_RCC_PLLSAIR_DIV_5, LL_RCC_PLLSAIDIVR_DIV_4);
+  LL_RCC_PLLSAI_Enable();
 
+ /* Wait till PLLSAI is ready */
+  while (!(LL_RCC_PLLSAI_IsReady()));
+  
 
 
 /************************************************************************************************/
@@ -308,6 +299,7 @@ static void SetupHardware(void) {
     | LL_AHB1_GRP1_PERIPH_GPIOG
     | LL_AHB1_GRP1_PERIPH_GPIOH
     | LL_AHB1_GRP1_PERIPH_CRC
+    | LL_AHB1_GRP1_PERIPH_DMA2D
   );
 
   LL_APB1_GRP1_EnableClock(
@@ -318,6 +310,7 @@ static void SetupHardware(void) {
   LL_APB2_GRP1_EnableClock(
       LL_APB2_GRP1_PERIPH_SPI5
     | LL_APB2_GRP1_PERIPH_USART1
+    | LL_APB2_GRP1_PERIPH_LTDC
   );
 
   LL_AHB3_GRP1_EnableClock(
@@ -346,8 +339,8 @@ static void SetupHardware(void) {
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* RTC interrupt Init */
-  NVIC_SetPriority(RTC_Alarm_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 14, 0));
-  NVIC_EnableIRQ(RTC_Alarm_IRQn);
+  NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
+  NVIC_EnableIRQ(EXTI0_IRQn);
 
   /* EXTI channel to catch an interrupt */
   EXTI_InitStruct.Line_0_31             = LL_EXTI_LINE_0;
@@ -369,7 +362,7 @@ static void SetupHardware(void) {
   */
   GPIO_InitStruct.Pin                   = LL_GPIO_PIN_7 | LL_GPIO_PIN_8 | LL_GPIO_PIN_9;
   GPIO_InitStruct.Mode                  = LL_GPIO_MODE_ALTERNATE;
-  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType            = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
   GPIO_InitStruct.Alternate             = LL_GPIO_AF_5;
@@ -378,12 +371,12 @@ static void SetupHardware(void) {
   /*
   PF6   ------> SPI5_NSS
   */ 
-  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_6;
-  GPIO_InitStruct.Mode                  = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.OutputType            = LL_GPIO_OUTPUT_PUSHPULL;
-  GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+  // GPIO_InitStruct.Pin                   = LL_GPIO_PIN_6;
+  // GPIO_InitStruct.Mode                  = LL_GPIO_MODE_OUTPUT;
+  // GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_LOW;
+  // GPIO_InitStruct.OutputType            = LL_GPIO_OUTPUT_PUSHPULL;
+  // GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
+  // LL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /* SPI5 parameter configuration*/
   SPI_InitStruct.TransferDirection      = LL_SPI_FULL_DUPLEX;
@@ -392,13 +385,14 @@ static void SetupHardware(void) {
   SPI_InitStruct.ClockPolarity          = LL_SPI_POLARITY_LOW;
   SPI_InitStruct.ClockPhase             = LL_SPI_PHASE_1EDGE;
   SPI_InitStruct.NSS                    = LL_SPI_NSS_SOFT;
-  SPI_InitStruct.BaudRate               = LL_SPI_BAUDRATEPRESCALER_DIV2;
+  SPI_InitStruct.BaudRate               = LL_SPI_BAUDRATEPRESCALER_DIV16;
   SPI_InitStruct.BitOrder               = LL_SPI_MSB_FIRST;
   SPI_InitStruct.CRCCalculation         = LL_SPI_CRCCALCULATION_DISABLE;
-  SPI_InitStruct.CRCPoly                = 10;
+  // SPI_InitStruct.CRCPoly                = 7;
   LL_SPI_Init(SPI5, &SPI_InitStruct);
-  LL_SPI_SetStandard(SPI5, LL_SPI_PROTOCOL_MOTOROLA);
+  // LL_SPI_SetStandard(SPI5, LL_SPI_PROTOCOL_MOTOROLA);
 
+  LL_SPI_Enable(SPI5);
 
 
 
@@ -534,14 +528,14 @@ static void SetupHardware(void) {
   LL_RTC_SetSynchPrescaler(RTC, 255);
 
   if(LL_RTC_BAK_GetRegister(RTC, LL_RTC_BKP_DR0) != 0x32F2) {
-    RTC_TimeStruct.Hours                  = 18;
+    RTC_TimeStruct.Hours                  = 12;
     RTC_TimeStruct.Minutes                = 0;
     RTC_TimeStruct.Seconds                = 0;
-    LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_TimeStruct);
+    LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, &RTC_TimeStruct);
 
     RTC_DateStruct.WeekDay                = LL_RTC_WEEKDAY_THURSDAY;
-    RTC_DateStruct.Day                    = 27;
-    RTC_DateStruct.Month                  = LL_RTC_MONTH_FEBRUARY;
+    RTC_DateStruct.Day                    = 5;
+    RTC_DateStruct.Month                  = LL_RTC_MONTH_MARCH;
     RTC_DateStruct.Year                   = 120;
     LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_DateStruct);
 
@@ -640,45 +634,26 @@ static void SetupHardware(void) {
   PE1   ------> FMC_NBL1
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | LL_GPIO_PIN_3 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
-  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
-  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
+  GPIO_InitStruct.Mode                    = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Speed                   = LL_GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.OutputType              = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull                    = LL_GPIO_PULL_NO;
+  GPIO_InitStruct.Alternate               = LL_GPIO_AF_12;
   LL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin                     = LL_GPIO_PIN_0;
-  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
-  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_8 | LL_GPIO_PIN_15;
-  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
-  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
   LL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin = LL_GPIO_PIN_7 | LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12 | LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15 | LL_GPIO_PIN_0 | LL_GPIO_PIN_1;
-  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
-  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
   LL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin = LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15 | LL_GPIO_PIN_0 | LL_GPIO_PIN_1;
-  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
-  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
   LL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin                     = LL_GPIO_PIN_5 | LL_GPIO_PIN_6;
-  GPIO_InitStruct.Mode                    = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull                    = GPIO_NOPULL;
-  GPIO_InitStruct.Speed                   = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate               = GPIO_AF12_FMC;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   Sdram_InitStruct.SDBank                 = FMC_SDRAM_BANK2;
@@ -733,9 +708,184 @@ static void SetupHardware(void) {
   SDRAM_SendCommand(FMC_SDRAM_DEVICE, &SdramCommand_InitStruct);
 
   SDRAM_ProgramRefreshRate(FMC_SDRAM_DEVICE, 683);
+
+
+
+
+
+/************************************************************************************************/
+// DMA2
+  /* DMA2D interrupt Init */
+  // NVIC_SetPriority(DMA2D_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 5, 0));
+  // NVIC_EnableIRQ(DMA2D_IRQn);
+
+  // LL_DMA2D_SetMode(DMA2D, LL_DMA2D_MODE_M2M);
+  // LL_DMA2D_SetOutputColorMode(DMA2D, LL_DMA2D_OUTPUT_MODE_RGB565);
+  // LL_DMA2D_SetLineOffset(DMA2D, 0);
+  // LL_DMA2D_FGND_SetColorMode(DMA2D, LL_DMA2D_INPUT_MODE_RGB565);
+  // LL_DMA2D_FGND_SetAlphaMode(DMA2D, LL_DMA2D_ALPHA_MODE_NO_MODIF);
+  // LL_DMA2D_FGND_SetAlpha(DMA2D, 0);
+  // LL_DMA2D_FGND_SetLineOffset(DMA2D, 0);
+
+
+
+
+
+/************************************************************************************************/
+// LTDC
+  /**LTDC GPIO Configuration    
+  PF10    ------> LTDC_DE
+  PA3     ------> LTDC_B5
+  PA4     ------> LTDC_VSYNC
+  PA6     ------> LTDC_G2
+  PB0     ------> LTDC_R3
+  PB1     ------> LTDC_R6
+  PB10    ------> LTDC_G4
+  PB11    ------> LTDC_G5
+  PG6     ------> LTDC_R7
+  PG7     ------> LTDC_CLK
+  PC6     ------> LTDC_HSYNC
+  PC7     ------> LTDC_G6
+  PA11    ------> LTDC_R4
+  PA12    ------> LTDC_R5
+  PC10    ------> LTDC_R2
+  PD3     ------> LTDC_G7
+  PD6     ------> LTDC_B2
+  PG10    ------> LTDC_G3
+  PG11    ------> LTDC_B3
+  PG12    ------> LTDC_B4
+  PB8     ------> LTDC_B6
+  PB9     ------> LTDC_B7
+  PD11    ------> TE
+  PD12    ------> RDX
+  PD13    ------> WRX
+  PC2     ------> SPI_CS
+  */
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_10;
+  GPIO_InitStruct.Mode                   = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Speed                  = LL_GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.OutputType             = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull                   = LL_GPIO_PULL_NO;
+  GPIO_InitStruct.Alternate              = LL_GPIO_AF_14;
+  LL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_3 | LL_GPIO_PIN_4 | LL_GPIO_PIN_6 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_8 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 | LL_GPIO_PIN_11;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_6 | LL_GPIO_PIN_7 | LL_GPIO_PIN_11;
+  LL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_6 | LL_GPIO_PIN_7 | LL_GPIO_PIN_10;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_3 | LL_GPIO_PIN_6;
+  LL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_0 | LL_GPIO_PIN_1;
+  GPIO_InitStruct.Alternate             = LL_GPIO_AF_9;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_10 | LL_GPIO_PIN_12;
+  LL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_11;
+  GPIO_InitStruct.Mode                  = LL_GPIO_MODE_INPUT;
+  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_12 | LL_GPIO_PIN_13;
+  GPIO_InitStruct.Mode                  = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType            = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_2;
+  LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  LCD_CS_H;
+  LCD_WRX_L;
+  ILI9341_Init();
+
+
+  LTDC_InitTypeDef LTDC_InitStruct                = {0};
+  LTDC_LayerCfgTypeDef LTDC_Layer_InitStruct      = {0};
+
+  LTDC_InitStruct.HSPolarity                      = LTDC_HSPOLARITY_AL;
+  LTDC_InitStruct.VSPolarity                      = LTDC_VSPOLARITY_AL;
+  LTDC_InitStruct.DEPolarity                      = LTDC_DEPOLARITY_AL;
+  LTDC_InitStruct.PCPolarity                      = LTDC_PCPOLARITY_IIPC;
+  LTDC_InitStruct.HorizontalSync                  = 9;
+  LTDC_InitStruct.VerticalSync                    = 1;
+  LTDC_InitStruct.AccumulatedHBP                  = 29;
+  LTDC_InitStruct.AccumulatedVBP                  = 3;
+  LTDC_InitStruct.AccumulatedActiveW              = ILI9341_HEIGHT + 20 + LTDC_InitStruct.AccumulatedHBP; // 240 + LTDC_InitStruct.AccumulatedHBP;
+  LTDC_InitStruct.AccumulatedActiveH              = ILI9341_WIDTH + 20 + LTDC_InitStruct.AccumulatedVBP; // 320 + LTDC_InitStruct.AccumulatedVBP;
+  LTDC_InitStruct.TotalWidth                      = LTDC_InitStruct.AccumulatedActiveW + 10;
+  LTDC_InitStruct.TotalHeigh                      = LTDC_InitStruct.AccumulatedActiveH + 4 ;
+
+  LTDC_InitStruct.Backcolor.Red                   = (uint8_t)(ARGB8888_Red >> 16);
+  LTDC_InitStruct.Backcolor.Green                 = (uint8_t)(ARGB8888_Red >> 8);
+  LTDC_InitStruct.Backcolor.Blue                  = (uint8_t)ARGB8888_Red;
+  LTDC_Init(LTDC, &LTDC_InitStruct);
+
+  LTDC_Layer_InitStruct.WindowX0                  = 10;
+  LTDC_Layer_InitStruct.WindowX1                  = ILI9341_HEIGHT + 10; //230;
+  LTDC_Layer_InitStruct.WindowY0                  = 10;
+  LTDC_Layer_InitStruct.WindowY1                  = ILI9341_WIDTH + 10; //310;
+  LTDC_Layer_InitStruct.PixelFormat               = LTDC_PIXEL_FORMAT_ARGB8888;
+  LTDC_Layer_InitStruct.Alpha                     = 255;
+  LTDC_Layer_InitStruct.BlendingFactor1           = LTDC_BLENDING_FACTOR1_CA;
+  LTDC_Layer_InitStruct.BlendingFactor2           = LTDC_BLENDING_FACTOR2_CA;
+  LTDC_Layer_InitStruct.FBStartAdress             = ILI9341_L1_ADDR;
+  LTDC_Layer_InitStruct.ImageWidth                = ILI9341_HEIGHT; //220;
+  LTDC_Layer_InitStruct.ImageHeight               = ILI9341_WIDTH; //300;
+  LTDC_Layer_InitStruct.Alpha0                    = 0;
+  LTDC_Layer_InitStruct.Backcolor.Red             = (uint8_t)(ARGB8888_Apple >> 16);
+  LTDC_Layer_InitStruct.Backcolor.Green           = (uint8_t)(ARGB8888_Apple >> 8);
+  LTDC_Layer_InitStruct.Backcolor.Blue            = (uint8_t)ARGB8888_Apple;
+  LTDC_SetConfig(LTDC, &LTDC_Layer_InitStruct, L1);
+
+  // LTDC_Layer_InitStruct.WindowX0                  = 0;
+  // LTDC_Layer_InitStruct.WindowX1                  = 0;
+  // LTDC_Layer_InitStruct.WindowY0                  = 0;
+  // LTDC_Layer_InitStruct.WindowY1                  = 0;
+  // LTDC_Layer_InitStruct.PixelFormat               = LTDC_PIXEL_FORMAT_ARGB8888;
+  LTDC_Layer_InitStruct.Alpha                     = 255;
+  LTDC_Layer_InitStruct.BlendingFactor1           = LTDC_BLENDING_FACTOR1_PAxCA;
+  LTDC_Layer_InitStruct.BlendingFactor2           = LTDC_BLENDING_FACTOR2_PAxCA;
+  LTDC_Layer_InitStruct.FBStartAdress             = ILI9341_L2_ADDR;
+  // LTDC_Layer_InitStruct.ImageWidth                = 0;
+  // LTDC_Layer_InitStruct.ImageHeight               = 0;
+  LTDC_Layer_InitStruct.Alpha0                    = 255;
+  LTDC_Layer_InitStruct.Backcolor.Red             = (uint8_t)(ARGB8888_Orange >> 16);
+  LTDC_Layer_InitStruct.Backcolor.Green           = (uint8_t)(ARGB8888_Orange >> 8);
+  LTDC_Layer_InitStruct.Backcolor.Blue            = (uint8_t)ARGB8888_Orange;
+  // LTDC_SetConfig(LTDC, &LTDC_Layer_InitStruct, L2);
+
+  LTDC_Enable(LTDC);
+
+  FillLayer(L1, ARGB8888_Darkgreen);
+
+
+
+
+
+
+/************************************************************************************************/
+// Display
+  DrawPixel(L1, 20, 10, ARGB8888_Red);
+
+  DrawVLine(L1, 20, 20, 180, ARGB8888_White);
+  DrawHLine(L1, 20, 20, 180, ARGB8888_White);
+
+  // FillRectangle(L1, 40, 60, 100, 50, ARGB8888_White);
 }
-
-
 
 
 

@@ -37,12 +37,15 @@ Get_BitBandVal:
     .section  .text.Delay
     .type Delay, %function
 Delay:
-  mov r1, 1105
+  @ push {r0-r1, lr}
+  mov r1, 4200
   mul r0, r0, r1
   _LOOP_:
-    subs r0, r0, 95
+    subs r0, r0, 1
     bpl _LOOP_
   bx lr
+  @ pop {r0-r1, pc}
   .size  Delay, .-Delay
+
 
 

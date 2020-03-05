@@ -108,6 +108,7 @@ void RCC_IRQHandler(void) {
   */
 void EXTI0_IRQHandler(void) {
   LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_0);
+  FLAG_SET(_EREG_, _EWUPF_);
 }
 
 
@@ -148,5 +149,15 @@ void TIM7_IRQHandler(void) {
   LL_TIM_ClearFlag_UPDATE(TIM7);
   FLAG_SET(_EREG_, _BT7F_);
 }
+
+
+
+/**
+  * @brief This function handles DMA2D global interrupt.
+  */
+void DMA2D_IRQHandler(void) {
+  // LL_DMA2D_ClearFlag_CE(DMA2D);
+
+} 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

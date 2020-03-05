@@ -11,8 +11,8 @@
   
   
   /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __rtc_H
-#define __rtc_H
+#ifndef __RTC_H
+#define __RTC_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -33,14 +33,4 @@ void SetRTCAlarm(uint32_t alarmVal);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__rtc_H */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+#endif /*__RTC_H */

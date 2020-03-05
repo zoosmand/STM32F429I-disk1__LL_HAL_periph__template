@@ -12,7 +12,7 @@
 #define FMC_SDSR_Offset                           (uint16_t)0x0158
 
 #define SDRAM_START_ADDR                          (uint32_t)0xd0000000
-#define SDRAM_MAX_ADDR                            0x800000  // max=8MByte
+#define SDRAM_MAX_ADDR                            0x800000
 
 #define SDRAM_MODEREG_BURST_LENGTH_1              (uint16_t)0x0000
 #define SDRAM_MODEREG_BURST_LENGTH_2              (uint16_t)0x0001

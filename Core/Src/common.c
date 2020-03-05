@@ -4,24 +4,26 @@
 /* Global variables ----------------------------------------------------------*/
 uint32_t delay_tmp = 0;
 
-/* Private includes ----------------------------------------------------------*/
 
-/* Private typedef -----------------------------------------------------------*/
-
-/* Private define ------------------------------------------------------------*/
-
-/* Private macro -------------------------------------------------------------*/
-
-/* Private variables ---------------------------------------------------------*/
-
-
-
+/* -------------------------------------------------------------------------- */
+/* Private function prototypes -----------------------------------------------*/
+/* -------------------------------------------------------------------------- */
 __STATIC_INLINE uint32_t ITM_SendCharChannel(uint32_t ch, uint32_t channel);
+
+
+
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
   * @brief  This function is executed in case of error occurrence.
+  * @param  None
   * @retval None
   */
 void Error_Handler(void) {
@@ -34,6 +36,7 @@ void Error_Handler(void) {
 
 /**
   * @brief  This function blink a LED.
+  * @param  None
   * @retval None
   */
 void LED_Blink(GPIO_TypeDef* port, uint16_t pinSource) {
@@ -46,16 +49,15 @@ void LED_Blink(GPIO_TypeDef* port, uint16_t pinSource) {
 
 
 
-
-
-
-
 /********************************************************************************/
 /*                         printf() output supply block                         */
 /********************************************************************************/
-/*
- *
- */
+/**
+  * @brief  Sends a symbol into ITM channel. It could be cought with SWO pin on an MC. 
+  * @param ch: a symbol to be output
+  * @param channel: number of an ITM channel
+  * @retval the same symbol 
+  */
 __STATIC_INLINE uint32_t ITM_SendCharChannel(uint32_t ch, uint32_t channel) {
    /* ITM enabled and ITM Port enabled */
   if (((ITM->TCR & ITM_TCR_ITMENA_Msk) != 0UL) && ((ITM->TER & (1 << channel)) != 0UL)) {
@@ -68,9 +70,15 @@ __STATIC_INLINE uint32_t ITM_SendCharChannel(uint32_t ch, uint32_t channel) {
 }
 
 
-/*
- *
- */
+
+
+/**
+  * @brief An interpretation of the __weak system _write()
+  * @param file: IO file
+  * @param ptr: pointer to a char(symbol) array
+  * @param len: length oa the array
+  * @retval length of the array 
+  */
 int _write(int32_t file, char *ptr, int32_t len) {
  for(int32_t i = 0 ; i < len ; i++) {
    ITM_SendCharChannel(*ptr, 0);

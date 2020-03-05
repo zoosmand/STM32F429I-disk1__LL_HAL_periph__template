@@ -38,13 +38,13 @@ struct __FILE {
 #define GET_SRAM_BB_VAL(addr, offset)                           (Get_BitBandVal((GET_SRAM_BB_ADDR(addr, offset))))
 
 /* Exported macro ------------------------------------------------------------*/
-#define FLAG_SET(registry, flag)        SET_SRAM_BB_VAL((uint32_t)&registry, flag, 1)
-#define FLAG_CLR(registry, flag)        SET_SRAM_BB_VAL((uint32_t)&registry, flag, 0)
-#define FLAG_CHECK(registry, flag)      (GET_SRAM_BB_VAL((uint32_t)&registry, flag))
+#define FLAG_SET(registry, flag)                                SET_SRAM_BB_VAL((uint32_t)&registry, flag, 1)
+#define FLAG_CLR(registry, flag)                                SET_SRAM_BB_VAL((uint32_t)&registry, flag, 0)
+#define FLAG_CHECK(registry, flag)                              (GET_SRAM_BB_VAL((uint32_t)&registry, flag))
 
-#define PIN_H(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR_Offset, pinSource, 1)
-#define PIN_L(port, pinSource)          SET_PERIPH_BB_VAL((uint32_t)port, GPIO_ODR_Offset, pinSource, 0)
-#define PIN_LEVEL(port, pinSource)      (GET_PERIPH_BB_VAL((uint32_t)port, GPIO_IDR_Offset, pinSource))
+#define PIN_H(port, pinSource)                                  SET_PERIPH_BB_VAL((uint32_t)port, GPIO_BSRR_Offset, pinSource, 1)
+#define PIN_L(port, pinSource)                                  SET_PERIPH_BB_VAL((uint32_t)port, GPIO_BSRR_Offset, (pinSource + 16U), 1)
+#define PIN_LEVEL(port, pinSource)                              (GET_PERIPH_BB_VAL((uint32_t)port, GPIO_IDR_Offset, pinSource))
 
 
 

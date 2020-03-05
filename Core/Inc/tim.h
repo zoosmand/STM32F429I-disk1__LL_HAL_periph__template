@@ -11,8 +11,8 @@
   
   
   /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __tim_H
-#define __tim_H
+#ifndef __TIM_H
+#define __TIM_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -30,14 +30,5 @@ void BasicTimer_FromIT_Handler(TIM_TypeDef* tim);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__tim_H */
+#endif /*__TIM_H */
 
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

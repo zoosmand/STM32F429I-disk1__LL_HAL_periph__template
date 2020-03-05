@@ -1,4 +1,3 @@
-/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file           : main.h
@@ -7,17 +6,8 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
-/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
@@ -46,6 +36,7 @@ extern "C" {
 #include "stm32f4xx_ll_utils.h"
 #include "stm32f4xx_ll_pwr.h"
 #include "stm32f4xx_ll_dma.h"
+#include "stm32f4xx_ll_dma2d.h"
 #include "stm32f4xx_ll_rtc.h"
 #include "stm32f4xx_ll_spi.h"
 #include "stm32f4xx_ll_tim.h"
@@ -57,7 +48,12 @@ extern "C" {
 #include "common.h"
 #include "tim.h"
 #include "rtc.h"
+#include "spi.h"
 #include "sdram.h"
+#include "ltdc.h"
+#include "fonts.h"
+#include "display.h"
+#include "exti.h"
 
 
 /* Exported types ------------------------------------------------------------*/
@@ -89,8 +85,9 @@ extern uint32_t Get_BitBandVal(uint32_t addr);
 #define _DDF_     5 // Display Delay Flag
 #define _DBLF_    6 // Data Buffer is Locked Flag
 #define _USART1F_ 7 // USART1 Interrupt occurs Flag
-#define _BLINKF_  8
+#define _BLINKF_  8 // Blink Flaf
 #define _DELAYF_  9 // Delay Flag
+#define _EWUPF_   10 // EXTI WakeUp PA0 Flag
 
 #ifdef __cplusplus
 }
@@ -98,4 +95,3 @@ extern uint32_t Get_BitBandVal(uint32_t addr);
 
 #endif /* __MAIN_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
