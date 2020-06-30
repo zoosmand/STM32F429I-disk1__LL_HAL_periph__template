@@ -19,6 +19,18 @@ struct __FILE {
   /* is required. */
 };
 
+// typedef enum {
+//   UNLOCK    = 0,
+//   LOCK
+// } LockState;
+// extern enum lockStates {
+//   UNLOCK    = 0,
+//   LOCK      = 1
+// };
+
+//typedef enum lockStates LockState;
+
+
 /* Private defines -----------------------------------------------------------*/
 #define GPIO_IDR_Offset         (uint16_t)0x0010
 #define GPIO_ODR_Offset         (uint16_t)0x0014

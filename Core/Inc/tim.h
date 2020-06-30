@@ -10,7 +10,7 @@
   */
   
   
-  /* Define to prevent recursive inclusion -------------------------------------*/
+/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __TIM_H
 #define __TIM_H
 #ifdef __cplusplus

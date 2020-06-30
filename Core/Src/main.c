@@ -181,6 +181,11 @@ void Flags_Handler(void){
       FLAG_CLR(_EREG_, _EWUPF_);
     }
   }
+
+  if (FLAG_CHECK(_EREG_, _ETSF_)) {
+    TouchScreen_Handler();
+    FLAG_CLR(_EREG_, _ETSF_);
+  }
 }
 
 
@@ -289,6 +294,11 @@ static void SetupHardware(void) {
 /************************************************************************************************/
 // Peripheral clock
 
+  LL_APB1_GRP1_EnableClock(
+      LL_APB1_GRP1_PERIPH_I2C3
+    | LL_APB1_GRP1_PERIPH_TIM7
+  );
+
   LL_AHB1_GRP1_EnableClock(
       LL_AHB1_GRP1_PERIPH_GPIOA
     | LL_AHB1_GRP1_PERIPH_GPIOB
@@ -300,11 +310,6 @@ static void SetupHardware(void) {
     | LL_AHB1_GRP1_PERIPH_GPIOH
     | LL_AHB1_GRP1_PERIPH_CRC
     | LL_AHB1_GRP1_PERIPH_DMA2D
-  );
-
-  LL_APB1_GRP1_EnableClock(
-      LL_APB1_GRP1_PERIPH_I2C3
-    | LL_APB1_GRP1_PERIPH_TIM7
   );
 
   LL_APB2_GRP1_EnableClock(
@@ -332,22 +337,27 @@ static void SetupHardware(void) {
   GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
   LL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-// GPIO Wake-Up PA0
-  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_0;
+// GPIO Wake-Up PA0, Touch Screen PA15
+  GPIO_InitStruct.Pin                   = LL_GPIO_PIN_0 | LL_GPIO_PIN_15;
   GPIO_InitStruct.Mode                  = LL_GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /* RTC interrupt Init */
-  NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
-  NVIC_EnableIRQ(EXTI0_IRQn);
-
   /* EXTI channel to catch an interrupt */
-  EXTI_InitStruct.Line_0_31             = LL_EXTI_LINE_0;
+  EXTI_InitStruct.Line_0_31             = LL_EXTI_LINE_0 | LL_EXTI_LINE_15;
   EXTI_InitStruct.Mode                  = LL_EXTI_MODE_IT;
   EXTI_InitStruct.Trigger               = LL_EXTI_TRIGGER_RISING;
   EXTI_InitStruct.LineCommand           = ENABLE;
   LL_EXTI_Init(&EXTI_InitStruct);
+
+  /* Wake-Up PA0, interrupt Init */
+  NVIC_SetPriority(EXTI0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
+  NVIC_EnableIRQ(EXTI0_IRQn);
+
+  /* Touch screen PA15, interrupt Init */
+  NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
+  NVIC_EnableIRQ(EXTI15_10_IRQn);
+
 
 
 
@@ -410,36 +420,40 @@ static void SetupHardware(void) {
   */
   GPIO_InitStruct.Pin                   = LL_GPIO_PIN_9;
   GPIO_InitStruct.Mode                  = LL_GPIO_MODE_ALTERNATE;
-  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_MEDIUM;
   GPIO_InitStruct.OutputType            = LL_GPIO_OUTPUT_OPENDRAIN;
-  GPIO_InitStruct.Pull                  = LL_GPIO_PULL_UP;
+  GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
   GPIO_InitStruct.Alternate             = LL_GPIO_AF_4;
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin                   = LL_GPIO_PIN_8;
   GPIO_InitStruct.Mode                  = LL_GPIO_MODE_ALTERNATE;
-  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Speed                 = LL_GPIO_SPEED_FREQ_MEDIUM;
   GPIO_InitStruct.OutputType            = LL_GPIO_OUTPUT_OPENDRAIN;
-  GPIO_InitStruct.Pull                  = LL_GPIO_PULL_UP;
+  GPIO_InitStruct.Pull                  = LL_GPIO_PULL_NO;
   GPIO_InitStruct.Alternate             = LL_GPIO_AF_4;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  LL_I2C_DisableOwnAddress2(I2C3);
-  LL_I2C_DisableGeneralCall(I2C3);
-  LL_I2C_EnableClockStretching(I2C3);
+  // LL_I2C_DisableOwnAddress2(I2C3);
+  // LL_I2C_DisableGeneralCall(I2C3);
+  // LL_I2C_EnableClockStretching(I2C3);
   I2C_InitStruct.PeripheralMode         = LL_I2C_MODE_I2C;
   I2C_InitStruct.ClockSpeed             = 100000;
   I2C_InitStruct.DutyCycle              = LL_I2C_DUTYCYCLE_2;
-  I2C_InitStruct.AnalogFilter           = LL_I2C_ANALOGFILTER_ENABLE;
+  I2C_InitStruct.AnalogFilter           = LL_I2C_ANALOGFILTER_DISABLE;
   I2C_InitStruct.DigitalFilter          = 0;
   I2C_InitStruct.OwnAddress1            = 0;
-  I2C_InitStruct.TypeAcknowledge        = LL_I2C_ACK;
+  I2C_InitStruct.TypeAcknowledge        = LL_I2C_NACK;
   I2C_InitStruct.OwnAddrSize            = LL_I2C_OWNADDRESS1_7BIT;
-  LL_I2C_Init(I2C3, &I2C_InitStruct);
   LL_I2C_SetOwnAddress2(I2C3, 0);
 
+  LL_I2C_Enable(I2C3);
+  // LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_I2C3);
+  // LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_I2C3);
+  RCC->APB1RSTR |= LL_APB1_GRP1_PERIPH_I2C3;
+  RCC->APB1RSTR &= ~(LL_APB1_GRP1_PERIPH_I2C3);
 
-
+  LL_I2C_Init(I2C3, &I2C_InitStruct);
 
 
 
@@ -528,13 +542,13 @@ static void SetupHardware(void) {
   LL_RTC_SetSynchPrescaler(RTC, 255);
 
   if(LL_RTC_BAK_GetRegister(RTC, LL_RTC_BKP_DR0) != 0x32F2) {
-    RTC_TimeStruct.Hours                  = 12;
+    RTC_TimeStruct.Hours                  = 20;
     RTC_TimeStruct.Minutes                = 0;
     RTC_TimeStruct.Seconds                = 0;
     LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, &RTC_TimeStruct);
 
-    RTC_DateStruct.WeekDay                = LL_RTC_WEEKDAY_THURSDAY;
-    RTC_DateStruct.Day                    = 5;
+    RTC_DateStruct.WeekDay                = LL_RTC_WEEKDAY_TUESDAY;
+    RTC_DateStruct.Day                    = 10;
     RTC_DateStruct.Month                  = LL_RTC_MONTH_MARCH;
     RTC_DateStruct.Year                   = 120;
     LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_DateStruct);

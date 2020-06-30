@@ -153,6 +153,18 @@ void TIM7_IRQHandler(void) {
 
 
 /**
+  * @brief This function handles EXTI15_10 global interrupt.
+  */
+void EXTI15_10_IRQHandler(void) {
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_15)) {
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_15);
+    FLAG_SET(_EREG_, _ETSF_);
+  }
+}
+
+
+
+/**
   * @brief This function handles DMA2D global interrupt.
   */
 void DMA2D_IRQHandler(void) {

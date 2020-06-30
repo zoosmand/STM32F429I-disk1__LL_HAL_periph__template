@@ -50,6 +50,8 @@ Core/Src/dot_15x21.c \
 Core/Src/dot_20x28.c \
 Core/Src/display.c \
 Core/Src/exti.c \
+Core/Src/i2c.c \
+Core/Src/ts.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_crc.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.c \

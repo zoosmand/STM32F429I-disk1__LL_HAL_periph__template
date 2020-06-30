@@ -46,6 +46,8 @@ uint8_t WakeUp_Handler(void) {
       yStart = 40;
       PrintString(L1, &xStart, &yStart, &font_dot20x28, tapStr, 0);
       status = 1;
+
+      TouchScreen_Handler();
     }
   } else {
     wupCounter = 0;

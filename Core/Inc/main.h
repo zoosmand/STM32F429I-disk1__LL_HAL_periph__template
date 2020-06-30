@@ -54,6 +54,8 @@ extern "C" {
 #include "fonts.h"
 #include "display.h"
 #include "exti.h"
+#include "i2c.h"
+#include "ts.h"
 
 
 /* Exported types ------------------------------------------------------------*/
@@ -64,6 +66,9 @@ extern uint32_t minutes;
 extern uint32_t _EREG_;
 
 /* Exported constants --------------------------------------------------------*/
+
+/* Private defines -----------------------------------------------------------*/
+#define CCMRAM  __attribute__((section(".ccmram")))
 
 /* Exported macro ------------------------------------------------------------*/
 
@@ -88,6 +93,7 @@ extern uint32_t Get_BitBandVal(uint32_t addr);
 #define _BLINKF_  8 // Blink Flaf
 #define _DELAYF_  9 // Delay Flag
 #define _EWUPF_   10 // EXTI WakeUp PA0 Flag
+#define _ETSF_    11 // EXTI Touch Screen PA15 Flag
 
 #ifdef __cplusplus
 }

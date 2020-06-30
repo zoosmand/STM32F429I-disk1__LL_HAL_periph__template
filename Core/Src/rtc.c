@@ -40,7 +40,7 @@ void RTC_Alarm_Handler(char alarm) {
     // // uint32_t dt = LL_RTC_DATE_Get(RTC);
     
     sprintf(timeStr, "%2lx:%02lx:%02lx", LL_RTC_TIME_GetHour(RTC), LL_RTC_TIME_GetMinute(RTC), LL_RTC_TIME_GetSecond(RTC));
-    sprintf(dateStr, "%2lx/%lx/%4ld", LL_RTC_DATE_GetDay(RTC), LL_RTC_DATE_GetMonth(RTC), (LL_RTC_DATE_GetYear(RTC) + 1900));
+    sprintf(dateStr, "%2ld/%ld/%4ld", LL_RTC_DATE_GetDay(RTC), LL_RTC_DATE_GetMonth(RTC), (LL_RTC_DATE_GetYear(RTC) + 1900));
     // printf("date: %s\n\r", dateStr);
     // printf("time: %s\n\r", timeStr);
 
