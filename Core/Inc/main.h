@@ -50,6 +50,7 @@ extern "C" {
 #include "rtc.h"
 #include "spi.h"
 #include "sdram.h"
+#include "dma2d.h"
 #include "ltdc.h"
 #include "fonts.h"
 #include "display.h"

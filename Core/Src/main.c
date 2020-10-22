@@ -124,7 +124,8 @@ static void CronMillis_Handler(void) {
 static void CronSeconds_Handler(void) {
   //
   LL_IWDG_ReloadCounter(IWDG);
-  LED_Blink(GPIOG, GPIO_BSRR_BS13_Pos);
+  // LED_Blink(GPIOG, GPIO_BSRR_BS13_Pos);
+  printf("test\n");
 }
 
 // ---- Minutes ---- //
@@ -235,21 +236,30 @@ static void SetupHardware(void) {
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
   LL_PWR_EnableOverDriveMode();
-  LL_RCC_HSE_Enable();
 
+  LL_RCC_HSE_Enable();
    /* Wait till HSE is ready */
   while (!(LL_RCC_HSE_IsReady()));
 
   LL_RCC_LSI_Enable();
-
    /* Wait till LSI is ready */
-  while (!(LL_RCC_LSI_IsReady()));
+  while (!(LL_RCC_LSI_IsReady())); 
+
 
   LL_PWR_EnableBkUpAccess();
   LL_RCC_ForceBackupDomainReset();
   LL_RCC_ReleaseBackupDomainReset();
-  LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
+
+  LL_RCC_LSE_Enable();
+   /* Wait till LSE is ready */
+  while(!(LL_RCC_LSE_IsReady()));
+
+  LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSE);
+  // LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
   LL_RCC_EnableRTC();
+
+
+
 
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_4, 180, LL_RCC_PLLP_DIV_2);
   LL_RCC_PLL_Enable();
@@ -895,7 +905,7 @@ static void SetupHardware(void) {
 // Display
   DrawPixel(L1, 20, 10, ARGB8888_Red);
 
-  DrawVLine(L1, 20, 20, 180, ARGB8888_White);
+  DrawVLine(L1, 20, 20, 220, ARGB8888_White);
   DrawHLine(L1, 20, 20, 180, ARGB8888_White);
 
   // FillRectangle(L1, 40, 60, 100, 50, ARGB8888_White);

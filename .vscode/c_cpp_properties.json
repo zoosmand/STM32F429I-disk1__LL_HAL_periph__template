@@ -13,8 +13,6 @@
                 "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F4xx/Include/",
                 "${workspaceRoot}/Core/Inc",
                 "${workspaceRoot}/Core/Src",
-                "${workspaceRoot}/Inc",
-                "${workspaceRoot}/Src",
                 "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Inc",
                 "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/",
                 "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Src"
@@ -66,8 +64,6 @@
                 "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F4xx/Include/",
                 "${workspaceRoot}/Core/Inc",
                 "${workspaceRoot}/Core/Src",
-                "${workspaceRoot}/Inc",
-                "${workspaceRoot}/Src",
                 "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Inc",
                 "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/",
                 "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Src"

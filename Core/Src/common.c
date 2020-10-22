@@ -77,7 +77,7 @@ __STATIC_INLINE uint32_t ITM_SendCharChannel(uint32_t ch, uint32_t channel) {
   * @param file: IO file
   * @param ptr: pointer to a char(symbol) array
   * @param len: length oa the array
-  * @retval length of the array 
+  * @retval length of the array
   */
 int _write(int32_t file, char *ptr, int32_t len) {
  for(int32_t i = 0 ; i < len ; i++) {
